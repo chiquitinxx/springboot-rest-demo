@@ -7,7 +7,7 @@ requirejs.config({
 });
 
 // Start the main app logic.
-requirejs(['jquery', 'grooscript', 'JQueryUtils', 'grooscript-binder', 'app/Item'], function($) {
+requirejs(['jquery', 'grooscript', 'JQueryUtils', 'grooscript-binder', 'app/Presenter'], function($) {
     var jQueryUtils = JQueryUtils();
     item = Item();
 
