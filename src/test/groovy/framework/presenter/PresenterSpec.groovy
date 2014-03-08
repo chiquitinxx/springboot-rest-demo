@@ -1,10 +1,11 @@
-package presenter
+package framework.presenter
 
-import model.Framework
-import model.FrameworksModel
+import framework.model.Framework
+import framework.model.FrameworksModel
 import org.codehaus.groovy.runtime.MethodClosure
 import spock.lang.Specification
-import view.FrameworksView
+import framework.view.FrameworksView
+import spock.lang.Unroll
 
 /**
  * User: jorgefrancoleza
@@ -37,22 +38,45 @@ class PresenterSpec extends Specification {
         presenter.onLoad()
 
         then:
-        1 * model.loadFrameworks(_ as MethodClosure)
+        1 * model.loadFrameworks(presenter.updateFrameworksList)
         presenter.frameworks == []
         presenter.nameFramework == ''
         presenter.urlFramework == ''
         presenter.urlImageFramework == ''
     }
 
+    @Unroll
+    def 'on button add with incorrect params [name: #name, url: #url, urlImage: #urlImage]'() {
+        when:
+        presenter.nameFramework = name
+        presenter.urlFramework = url
+        presenter.urlImageFramework = urlImage
+        presenter.buttonAddFrameworkClick()
+
+        then:
+        1 * view.validationError('No, no, no!')
+        !presenter.frameworks
+
+        where:
+        name    | url        | urlImage
+        null    | null       | null
+        ''      | ''         | ''
+        'name'  | ''         | null
+        'name'  | 'htt://'   | null
+        'name'  | 'http://<' | null
+        'name<' | 'https://' | null
+        'name'  | 'https://' | '<'
+    }
+
     def 'on button add new framework'() {
         when:
         presenter.nameFramework = 'name'
-        presenter.urlFramework = 'url'
+        presenter.urlFramework = 'http://url'
         presenter.urlImageFramework = 'urlImage'
         presenter.buttonAddFrameworkClick()
 
         then:
-        1 * model.addFramework('name', 'url', 'urlImage', _ as MethodClosure)
+        1 * model.addFramework('name', 'http://url', 'urlImage', presenter.addNewFrameworkToList)
         !presenter.frameworks
     }
 

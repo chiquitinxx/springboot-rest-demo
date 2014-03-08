@@ -21,7 +21,10 @@ jar {
 }
 
 grooscript {
-    source = ['src/main/groovy/presenter']
+    source = ['src/main/groovy/framework/model',
+            'src/main/groovy/framework/view',
+            'src/main/groovy/framework/presenter']
+    classPath = ['src/main/groovy']
     initialText = '//Grooscript converted file'
 }
 

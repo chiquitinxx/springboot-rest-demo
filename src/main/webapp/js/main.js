@@ -7,15 +7,21 @@ requirejs.config({
 });
 
 // Start the main app logic.
-requirejs(['jquery', 'grooscript', 'JQueryUtils', 'grooscript-binder', 'app/Presenter'], function($) {
+requirejs(['jquery', 'grooscript', 'JQueryUtils', 'grooscript-binder', 'grooscript-builder',
+    'app/Framework', 'app/FrameworksModel', 'app/FrameworksView', 'app/Presenter'], function($) {
     var jQueryUtils = JQueryUtils();
-    item = Item();
+
+    presenter = Presenter();
+    presenter.model = FrameworksModel();
+    presenter.view = FrameworksView();
 
     var binder = Binder();
     binder.jQueryUtils = jQueryUtils;
     $(document).ready(function() {
-        binder.bindAllProperties(item);
-        binder.bindAllMethods(item);
+        binder.bindAllProperties(presenter);
+        binder.bindAllMethods(presenter);
     });
+
+    presenter.onLoad();
 
 });

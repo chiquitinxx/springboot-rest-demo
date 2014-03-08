@@ -1,4 +1,4 @@
-package model
+package framework.model
 
 /**
  * Created by jorge on 01/03/14.
