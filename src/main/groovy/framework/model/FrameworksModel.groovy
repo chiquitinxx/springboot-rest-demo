@@ -21,14 +21,12 @@ class FrameworksModel {
 
     @GsNative
     def addFramework(String name, String url, String urlImage, Closure onAdded) {/*
-        console.log('onAdded before:'+onAdded);
-            $.ajax({
+        $.ajax({
             type: "POST",
             url: "/frameworks",
             data: { name: name, url: url, urlImage: urlImage }
         })
         .done(function( msg ) {
-            console.log('onAdded later:'+onAdded);
             var framework = Framework();
             gs.passMapToObject(msg, framework);
             onAdded(framework);

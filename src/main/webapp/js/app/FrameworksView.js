@@ -3,8 +3,7 @@ function FrameworksView() {
   gSobject.clazz = { name: 'framework.view.FrameworksView', simpleName: 'FrameworksView'};
   gSobject.clazz.superclass = { name: 'java.lang.Object', simpleName: 'Object'};
   gSobject.setHtml = function(selector, html) {
-    console.log('html:'+html);
-        $(selector).html(html);
+    $(selector).html(html);
   }
   gSobject['updateFrameworks'] = function(frameworks) {
     var html = gs.mc(Builder,"build",gs.list([function(it) {

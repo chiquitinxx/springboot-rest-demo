@@ -11,7 +11,6 @@ class FrameworksView {
 
     @GsNative
     def setHtml(String selector, String html) {/*
-        console.log('html:'+html);
         $(selector).html(html);
     */}
 
