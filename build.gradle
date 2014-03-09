@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC3")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC4")
         classpath group: 'org.grooscript', name: 'grooscript-gradle-plugin', version: '0.2'
     }
 }
@@ -14,8 +14,14 @@ apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'grooscript'
+apply plugin: 'war'
 
-jar {
+/*jar {
+    baseName = 'rest-h2-grooscript'
+    version =  '0.1.0'
+}*/
+
+war {
     baseName = 'rest-h2-grooscript'
     version =  '0.1.0'
 }
