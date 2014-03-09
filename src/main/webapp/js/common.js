@@ -6,6 +6,7 @@ requirejs.config({
     }
 });
 
-requirejs(['jquery', 'grooscript', 'JQueryUtils', 'grooscript-binder', 'grooscript-builder'], function($) {
-    return $;
+requirejs(['jquery', 'grooscript'], function($) {
+    //requirejs(['JQueryUtils', 'grooscript-binder', 'grooscript-builder'], function() {
+    //});
 });

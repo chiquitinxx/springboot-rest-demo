@@ -55,6 +55,6 @@ li {
 }
 
 #validationError {
-    color: red;
+    color: black;
     display: inline;
 }
