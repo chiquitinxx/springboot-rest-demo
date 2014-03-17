@@ -1,6 +1,6 @@
 require(['./common'], function () {
-    requirejs(['JQueryUtils', 'grooscript-binder', 'grooscript-builder'], function() {
-        requirejs(['jquery', 'app/Framework', 'app/FrameworksModel', 'app/FrameworksView', 'app/Presenter'], function($) {
+    require(['JQueryUtils', 'grooscript-binder', 'grooscript-builder'], function() {
+        require(['jquery', 'app/Framework', 'app/FrameworksModel', 'app/FrameworksView', 'app/Presenter'], function($) {
             var jQueryUtils = JQueryUtils();
 
             presenter = Presenter();

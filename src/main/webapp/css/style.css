@@ -18,7 +18,7 @@ input {
     font-size: 22px;
 }
 
-#buttonAddFramework {
+.doButton {
     margin-left: 0;
     padding:5px 15px;
     border:1 none;
@@ -57,4 +57,29 @@ li {
 #validationError {
     color: black;
     display: inline;
+}
+
+#editor {
+    height: 500px;
+    font-size: 18px;
+    position: relative;
+    /*position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;*/
+}
+
+#actions, #results {
+    padding: 10px;
+}
+
+.errorMessage {
+    background: red;
+    color: white;
+}
+
+.consoleMessage {
+    background: black;
+    color: white;
 }

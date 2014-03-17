@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
@@ -32,10 +33,7 @@ public class FrameworksController {
     }
 
     @RequestMapping(method=RequestMethod.POST)
-    public @ResponseBody Framework insertFramework(@RequestParam(value="name", required=true) String name,
-                                         @RequestParam(value="url", required=true) String url,
-                                         @RequestParam(value="urlImage", required=false) String urlImage) {
-        def framework = new Framework(name: name, url: url, urlImage: urlImage)
+    public @ResponseBody Framework insertFramework(@ModelAttribute("framework") Framework framework) {
         jdbcTemplate.update("insert into FRAMEWORKS values " +
                 "('${framework.name}', '${framework.url}', '${framework.urlImage?:''}');")
         return framework
