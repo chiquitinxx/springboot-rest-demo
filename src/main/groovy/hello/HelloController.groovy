@@ -25,9 +25,6 @@ public class HelloController {
 
     @RequestMapping("/conversion")
     ModelAndView conversion() {
-        println '**** Classpath: ' + System.getProperty("java.class.path")
-        println '**** Path: ' + new File('.').absolutePath
-
         return new ModelAndView('/conversions.html')
     }
 

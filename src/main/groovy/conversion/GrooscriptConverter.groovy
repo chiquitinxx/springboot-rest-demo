@@ -25,8 +25,6 @@ class GrooscriptConverter {
             convertedCode.console = result.gSconsole
             convertedCode.assertFails = result.gSfails
         } catch (e) {
-            println '**** Classpath: ' + System.getProperty("java.class.path")
-            println '**** Path: ' + new File('.').absolutePath
             println '**** Error conversion: ' + e.message
             convertedCode.errorMessage = e.message
         }
