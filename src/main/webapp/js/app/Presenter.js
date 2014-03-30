@@ -35,7 +35,7 @@ function Presenter() {
     if (gs.mc(gSobject,"validateFramework",gs.list([]))) {
       return gs.mc(gSobject.model,"addFramework",gs.list([gSobject.nameFramework, gSobject.urlFramework, gSobject.urlImageFramework, gSobject.addNewFrameworkToList]));
     } else {
-      return gs.mc(gSobject.view,"validationError",gs.list(["No, no, no!"]));
+      return gs.mc(gSobject.view,"validationError",gs.list(["You failed!"]));
     };
   }
   gSobject.Presenter1 = function(map) { gs.passMapToObject(map,this); return this;};

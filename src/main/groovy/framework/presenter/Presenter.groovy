@@ -37,7 +37,7 @@ class Presenter {
         if (validateFramework()) {
             model.addFramework(nameFramework, urlFramework, urlImageFramework, addNewFrameworkToList)
         } else {
-            view.validationError('No, no, no!')
+            view.validationError('You failed!')
         }
     }
 

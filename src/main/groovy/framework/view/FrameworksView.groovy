@@ -20,7 +20,7 @@ class FrameworksView {
                 frameworks.each { Framework framework ->
                     li {
                         div(class: 'logo') {
-                            img src: framework.urlImage ? framework.urlImage : 'img/nologo.png'
+                            img src: framework.hasImage() ? framework.urlImage : 'img/nologo.png'
                         }
                         a (href: framework.url, framework.name)
                     }

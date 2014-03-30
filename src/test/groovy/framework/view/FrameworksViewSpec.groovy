@@ -12,7 +12,7 @@ class FrameworksViewSpec extends Specification {
     private static final ERROR = 'error'
     private static final NAME = 'aName'
     private static final URL = 'aUrl'
-    private static final URL_IMAGE = 'aUrlImage'
+    private static final URL_IMAGE = 'aUrlImage.jpg'
     private FrameworksView view = new FrameworksView()
     private String htmlResult
 
@@ -40,6 +40,6 @@ class FrameworksViewSpec extends Specification {
         view.updateFrameworks([new Framework(name: NAME, url: URL, urlImage: URL_IMAGE)])
 
         then:
-        htmlResult == '<ul><li><div class=\'logo\'><img src=\'aUrlImage\'></img></div><a href=\'aUrl\'>aName</a></li></ul>'
+        htmlResult == '<ul><li><div class=\'logo\'><img src=\'aUrlImage.jpg\'></img></div><a href=\'aUrl\'>aName</a></li></ul>'
     }
 }

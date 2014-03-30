@@ -11,7 +11,7 @@ function FrameworksView() {
         return gs.mc(frameworks,"each",gs.list([function(framework) {
           return gs.mc(this,"li",gs.list([function(it) {
             gs.mc(this,"div",gs.list([gs.map().add("class","logo"), function(it) {
-              return gs.mc(this,"img",gs.list([gs.map().add("src",(gs.bool(gs.gp(framework,"urlImage")) ? gs.gp(framework,"urlImage") : "img/nologo.png"))]));
+              return gs.mc(this,"img",gs.list([gs.map().add("src",(gs.mc(framework,"hasImage",gs.list([])) ? gs.gp(framework,"urlImage") : "img/nologo.png"))]));
             }]));
             return gs.mc(this,"a",gs.list([gs.map().add("href",gs.gp(framework,"url")), gs.gp(framework,"name")]));
           }]));
