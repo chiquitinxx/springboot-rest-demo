@@ -10,8 +10,7 @@ function Framework() {
       return gs.mc(gs.mc(gSobject.urlImage,"toUpperCase",gs.list([])),"endsWith",gs.list([it]));
     }])));
   }
-  gSobject.Framework1 = function(map) { gs.passMapToObject(map,this); return this;};
-  if (arguments.length==1) {gSobject.Framework1(arguments[0]); }
+  if (arguments.length == 1) {gs.passMapToObject(arguments[0],gSobject);};
   
   return gSobject;
 };

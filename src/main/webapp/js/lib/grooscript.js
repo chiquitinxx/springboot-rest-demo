@@ -35,6 +35,9 @@
     //Delegate
     var actualDelegate = null;
 
+    //@Delegate
+    var mapAddDelegate = {};
+
     gs.myCategories = {};
 
     /////////////////////////////////////////////////////////////////
@@ -73,7 +76,7 @@
     /////////////////////////////////////////////////////////////////
     gs.baseClass = {
         //The with function, with is a reserved word in JavaScript
-        withz : function(closure) { closure.apply(this,closure.arguments); },
+        withz : function(closure) { closure.apply(this, closure.arguments); },
         getProperties : function() {
             var result = gs.map(), ob;
             for (ob in this) {
@@ -162,7 +165,7 @@
     }
 
     gs.inherit = function(p,objectName) {
-    //    function inherit(p,objectName) {
+        //    function inherit(p,objectName) {
         if (p === null) throw TypeError();
         if (Object.create) {
             return expandWithMetaclass(Object.create(p),objectName);
@@ -321,25 +324,28 @@
     // map - [:] from groovy
     /////////////////////////////////////////////////////////////////
     function isMapProperty(name) {
-        return ['clazz','gSdefaultValue','any','collect',
+        return isObjectProperty(name) || ['any','collect',
             'collectEntries','collectMany','countBy','dropWhile',
             'each','eachWithIndex','every','find','findAll',
             'findResult','findResults','get','getAt','groupBy',
-            'inject','intersect','leftShift','max','min',
-            'minus','plus','putAll','putAt','reverseEach',
+            'inject','intersect','max','min',
+            'putAll','putAt','reverseEach',
             'sort','spread','subMap','add','take','takeWhile',
-            'withDefault','count','drop','equals','toString',
+            'withDefault','count','drop',
             'put','size','isEmpty','remove','containsKey',
-            'containsValue','values','clone','withz','getProperties',
-            'getMethods','invokeMethod','constructor'].indexOf(name) >= 0;
+            'containsValue','values'].indexOf(name) >= 0;
     }
 
     gs.map = function() {
-        var object = new GsGroovyMap();
+        var gSobject = new GsGroovyMap();
         //gs.inherit(gs.baseClass,'LinkedHashMap');
-        expandWithMetaclass(object, 'LinkedHashMap');
+        expandWithMetaclass(gSobject, 'LinkedHashMap');
 
-        return object;
+        if (arguments.length == 1 && arguments[0] instanceof Object) {
+            gs.passMapToObject(arguments[0], gSobject);
+        }
+
+        return gSobject;
     };
 
     function GsGroovyMap() {
@@ -1296,7 +1302,7 @@
         }
         var object = data;
 
-        createClassNames(object,['java.util.ArrayList']);
+        createClassNames(object, ['java.util.ArrayList']);
 
         return object;
     };
@@ -1362,103 +1368,121 @@
     /////////////////////////////////////////////////////////////////
     gs.date = function() {
 
-        var object;
-        if (arguments.length==1) {
-            object = new Date(arguments[0]);
+        var gSobject;
+        if (arguments.length == 1) {
+            gSobject = new Date(arguments[0]);
         } else {
-            object = new Date();
+            gSobject = new Date();
         }
 
-        createClassNames(object,['java.util.Date']);
+        createClassNames(gSobject, ['java.util.Date']);
+        gSobject.withz = gs.baseClass.withz;
 
-        object.time = object.getTime();
+        gSobject.time = gSobject.getTime();
 
-        object.year = object.getFullYear();
-        object.month = object.getMonth();
-        object.date = object.getDay();
-        object.plus = function(other) {
+        gSobject.year = gSobject.getFullYear();
+        gSobject.month = gSobject.getMonth();
+        gSobject.date = gSobject.getDay();
+        gSobject.plus = function(other) {
             if (typeof other == 'number') {
-                var a = gs.date(this.time+(other * 1440000));
-                return a;
+                return gs.date(gSobject.time + (other * 1440000));
             } else {
-                return this + other;
+                return gSobject + other;
             }
         };
-        object.minus = function(other) {
+        gSobject.minus = function(other) {
             if (typeof other == 'number') {
-                var a = gs.date(this.time-(other * 1440000));
-                return a;
+                return gs.date(gSobject.time - (other * 1440000));
             } else {
-                return this + other;
+                return gSobject - other;
             }
         };
-        object.format = function(rule) {
+        gSobject.format = function(rule) {
             //TODO complete
             var exit = '';
             if (rule) {
                 exit = rule;
-                exit = exit.replaceAll('yyyy',this.getFullYear());
-                exit = exit.replaceAll('MM',fillZerosLeft(this.getMonth()+1,2));
-                exit = exit.replaceAll('dd',fillZerosLeft(this.getUTCDate(),2));
-                exit = exit.replaceAll('HH',fillZerosLeft(this.getHours(),2));
-                exit = exit.replaceAll('mm',fillZerosLeft(this.getMinutes(),2));
-                exit = exit.replaceAll('ss',fillZerosLeft(this.getSeconds(),2));
-                exit = exit.replaceAll('yy',lastChars(this.getFullYear(),2));
+                exit = exit.replaceAll('yyyy', gSobject.getFullYear());
+                exit = exit.replaceAll('MM', fillZerosLeft(gSobject.getMonth() + 1, 2));
+                exit = exit.replaceAll('dd', fillZerosLeft(gSobject.getUTCDate(), 2));
+                exit = exit.replaceAll('HH', fillZerosLeft(gSobject.getHours(), 2));
+                exit = exit.replaceAll('mm', fillZerosLeft(gSobject.getMinutes(), 2));
+                exit = exit.replaceAll('ss', fillZerosLeft(gSobject.getSeconds(), 2));
+                exit = exit.replaceAll('yy', lastChars(gSobject.getFullYear(), 2));
             }
             return exit;
         };
-        object.parse = function(rule,text) {
+        gSobject.parse = function(rule, text) {
             //TODO complete
-            var pos = rule.indexOf('yyyy');
-            if (pos>=0) {
-                this.setFullYear(text.substr(pos,4));
-            } else {
-                pos = rule.indexOf('yy');
-                if (pos>=0) {
-                    this.setFullYear(text.substr(pos,2));
+            var pos = rule.indexOf('MM');
+            if (pos >= 0) {
+                var newMonth = text.substr(pos, 2) - 1;
+                while (gSobject.getMonth() != newMonth) {
+                    gSobject.setMonth(newMonth, gSobject.getUTCDate());
                 }
             }
-            pos = rule.indexOf('MM');
-            if (pos>=0) {
-                this.setMonth(text.substr(pos,2)-1);
-            }
             pos = rule.indexOf('dd');
-            if (pos>=0) {
-                this.setUTCDate(text.substr(pos,2));
+            if (pos >= 0) {
+                var newDay = text.substr(pos, 2);
+                while (gSobject.getUTCDate() != newDay) {
+                    gSobject.setUTCDate(newDay);
+                }
+            }
+            pos = rule.indexOf('yyyy');
+            if (pos >= 0) {
+                gSobject.setFullYear(text.substr(pos, 4));
+            } else {
+                pos = rule.indexOf('yy');
+                if (pos >= 0) {
+                    gSobject.setFullYear(text.substr(pos, 2));
+                }
             }
             pos = rule.indexOf('HH');
-            if (pos>=0) {
-                this.setHours(text.substr(pos,2));
+            if (pos >= 0) {
+                gSobject.setHours(text.substr(pos, 2));
             }
             pos = rule.indexOf('mm');
-            if (pos>=0) {
-                this.setMinutes(text.substr(pos,2));
+            if (pos >= 0) {
+                gSobject.setMinutes(text.substr(pos, 2));
             }
             pos = rule.indexOf('ss');
-            if (pos>=0) {
-                this.setSeconds(text.substr(pos,2));
+            if (pos >= 0) {
+                gSobject.setSeconds(text.substr(pos, 2));
             }
-            return this;
-        };
 
-        return object;
+            return gSobject;
+        };
+        gSobject.clearTime = function() {
+            gSobject.setHours(0, 0, 0, 0);
+            return gSobject;
+        };
+        gSobject.equals = function(other) {
+            return gSobject.time == other.time;
+        };
+        gSobject.before = function(other) {
+            return gSobject.time < other.time;
+        };
+        gSobject.after = function(other) {
+            return gSobject.time > other.time;
+        };
+        return gSobject;
     };
 
     gs.rangeFromList = function(list, begin, end) {
-        return list.slice(begin,end+1);
+        return list.slice(begin, end + 1);
     };
 
-    function fillZerosLeft(item,size) {
+    function fillZerosLeft(item, size) {
         var value = item + '';
-        while (value.length<size) {
-            value = '0'+value;
+        while (value.length < size) {
+            value = '0' + value;
         }
         return value;
     }
 
-    function lastChars(item,number) {
+    function lastChars(item, number) {
         var value = item + '';
-        value = value.substring(value.length-number);
+        value = value.substring(value.length - number);
         return value;
     }
 
@@ -1605,8 +1629,8 @@
 
     Number.prototype.byteValue = Number.prototype.doubleValue = Number.prototype.shortValue =
         Number.prototype.floatValue = Number.prototype.longValue = function() {
-        return this;
-    }
+            return this;
+        }
 
     /////////////////////////////////////////////////////////////////
     //String functions
@@ -1745,7 +1769,15 @@
     };
 
     String.prototype.plus = function(other) {
-        return this + other.toString();
+        var addText = 'null';
+        if (other != undefined && other != null) {
+            if (other['toString'] != undefined) {
+                addText = other.toString();
+            } else {
+                addText = other;
+            }
+        }
+        return this + addText;
     };
 
     /////////////////////////////////////////////////////////////////
@@ -1796,7 +1828,7 @@
         var prop;
         for (prop in source) {
             if (typeof source[prop] === "function") continue;
-            if (prop != 'clazz') {
+            if (!isMapProperty(prop)) {
                 gs.sp(destination, prop, source[prop]);
             }
         }
@@ -1968,7 +2000,7 @@
 
     //For some special cases where access a property with this."${name}"
     //This can be a closure
-    gs.thisOrObject = function(thisItem,objectItem) {
+    gs.thisOrObject = function(thisItem, objectItem) {
         //this can only be used for our objects, our object must have withz function
         if (thisItem.withz === undefined && objectItem !== null && objectItem !== undefined) {
             return objectItem;
@@ -2065,7 +2097,7 @@
             }
         }
 
-        if (!hasFunc(item,'getProperty')) {
+        if (!hasFunc(item, 'getProperty')) {
             var nameFunction = 'get' + nameProperty.charAt(0).toUpperCase() + nameProperty.slice(1);
             if (!hasFunc(item,nameFunction)) {
                 if (typeof item[nameProperty] === "function" && nameProperty == 'size') {
@@ -2074,8 +2106,30 @@
                     if (item[nameProperty] !== undefined) {
                         return item[nameProperty];
                     } else {
+                        //Lets check in @Delegate
+                        if (item.clazz !== undefined) {
+                            var addDelegate = mapAddDelegate[item.clazz.simpleName];
+                            if (addDelegate !== null && addDelegate !== undefined) {
+                                var i;
+                                for (i = 0; i < addDelegate.length; i++) {
+                                    var prop = addDelegate[i];
+                                    var target = item[prop][nameProperty];
+                                    if (target !== undefined) {
+                                        return item[prop][nameProperty];
+                                    }
+                                }
+                            }
+                        }
+                        //Default value of a map
                         if (item.gSdefaultValue !== undefined && (typeof item.gSdefaultValue === "function")) {
                             item[nameProperty] = item.gSdefaultValue();
+                        }
+                        //Maybe in categories
+                        if (categories.length > 0 && item[nameProperty] === undefined) {
+                            var whereExecutes = categorySearching(nameFunction);
+                            if (whereExecutes !== null) {
+                                return whereExecutes[nameFunction].apply(item, [item]);
+                            }
                         }
                         return item[nameProperty];
                     }
@@ -2168,16 +2222,31 @@
 
                 //Lets check in mixins classes
                 if (mixins.length > 0) {
-                    whereExecutes = mixinSearching(item,methodName);
+                    whereExecutes = mixinSearching(item, methodName);
                     if (whereExecutes !== null) {
                         return whereExecutes[methodName].apply(item, joinParameters(item, values));
                     }
                 }
+
                 //Lets check in mixins objects
-                if (mixinsObjects.length>0) {
+                if (mixinsObjects.length > 0) {
                     whereExecutes = mixinObjectsSearching(item, methodName);
                     if (whereExecutes !== null) {
-                        return whereExecutes[methodName].apply(item,joinParameters(item, values));
+                        return whereExecutes[methodName].apply(item, joinParameters(item, values));
+                    }
+                }
+                //Lets check in @Delegate
+                if (item.clazz !== undefined) {
+                    var addDelegate = mapAddDelegate[item.clazz.simpleName];
+                    if (addDelegate !== null && addDelegate !== undefined) {
+                        var i;
+                        for (i = 0; i < addDelegate.length; i++) {
+                            var prop = addDelegate[i];
+                            var target = item[prop][methodName];
+                            if (target !== undefined) {
+                                return item[prop][methodName].apply(item, joinParameters(item, values));
+                            }
+                        }
                     }
                 }
 
@@ -2210,7 +2279,7 @@
         }
     };
 
-    function joinParameters(item,items) {
+    function joinParameters(item, items) {
         var listParameters = [item],i;
         for (i=0; i < items.size(); i++) {
             listParameters[listParameters.length] = items[i];
@@ -2221,7 +2290,7 @@
     ////////////////////////////////////////////////////////////
     // Categories
     ////////////////////////////////////////////////////////////
-    gs.categoryUse = function(item, closure) {
+    gs.categoryUse = function(item, itemClass, closure) {
         var ob, categoryCreated;
         if (existAnnotatedCategory(item)) {
             categoryCreated = gs.myCategories[item]();
@@ -2232,7 +2301,7 @@
                 }
             }
         } else {
-            categories[categories.length] = item;
+            categories[categories.length] = itemClass;
         }
         closure();
         if (existAnnotatedCategory(item)) {
@@ -2283,9 +2352,9 @@
         var result = null;
         var i;
         for (i = categories.length - 1; i >= 0 && result === null; i--) {
-            var name = categories[i];
-            if (eval(name)[methodName]) {
-                result = eval(name);
+            var itemClass = categories[i];
+            if (itemClass[methodName]) {
+                result = itemClass;
             }
         }
         return result;
@@ -2385,7 +2454,7 @@
         return result;
     }
 
-    function mixinObjectsSearching(item,methodName) {
+    function mixinObjectsSearching(item, methodName) {
 
         var result = null;
         var i, ourMixin=null;
@@ -2442,6 +2511,18 @@
     };
 
     ////////////////////////////////////////////////////////////
+    // @Delegate
+    ////////////////////////////////////////////////////////////
+    gs.astDelegate = function (baseClass, nameField) {
+        var currentDelegate = mapAddDelegate[baseClass];
+        if (currentDelegate == null || currentDelegate == undefined) {
+            currentDelegate = [];
+        };
+        currentDelegate[currentDelegate.length] = nameField;
+        mapAddDelegate[baseClass] = currentDelegate;
+    };
+
+    ////////////////////////////////////////////////////////////
     // Delegate
     ////////////////////////////////////////////////////////////
     gs.applyDelegate = function(func, delegate, params) {
@@ -2452,6 +2533,14 @@
         //console.log('desetting delegate');
         actualDelegate = oldDelegate;
         return result;
+    };
+
+    gs.executeCall = function (func, params) {
+        if (typeof func === 'object' && func['call'] !== undefined) {
+            return func['call'].apply(func, params);
+        } else {
+            return func.apply(func, params);
+        }
     };
 
     ////////////////////////////////////////////////////////////
@@ -2574,6 +2663,15 @@
                 return number;
             }
         }
+    };
+
+    gs.isGroovyObj = function(maybeGroovyObject) {
+        return maybeGroovyObject !== null &&
+            (maybeGroovyObject['withz'] !== undefined &&
+                typeof(maybeGroovyObject['withz']) === "function")
+            ||
+            (maybeGroovyObject['clazz'] !== undefined &&
+                maybeGroovyObject['clazz'].name == 'java.util.LinkedHashMap')
     };
 
 }).call(this);

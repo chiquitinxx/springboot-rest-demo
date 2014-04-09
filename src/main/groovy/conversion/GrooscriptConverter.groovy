@@ -35,9 +35,6 @@ class GrooscriptConverter {
     private getGrooscriptJsFile() {
         File finalFile = new File('src/main/webapp/js/lib/grooscript.js')
 
-        //if (!finalFile || !finalFile.exists() || !finalFile.isFile()) {
-        //    finalFile = new File('js/lib/grooscript.js')
-        //}
         finalFile
     }
 }

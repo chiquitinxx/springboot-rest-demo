@@ -20,13 +20,7 @@ public class Application {
         //app.setShowBanner(false)
         ConfigurableApplicationContext ctx = app.run(args)
 
-
         println '************************** Running.....'
-
-        /*ctx.beanDefinitionNames.each {
-            println '****** Name: '+it
-        }*/
-
         println '**** go /conversion to do conversions'
     }
 }

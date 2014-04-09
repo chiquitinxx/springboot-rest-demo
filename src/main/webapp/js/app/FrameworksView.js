@@ -20,11 +20,10 @@ function FrameworksView() {
     }]));
     return gs.mc(gSobject,"setHtml",gs.list(["#listFrameworks", html]));
   }
-  gSobject['validationError'] = function(message) {
-    return gs.mc(gSobject,"setHtml",gs.list(["#validationError", message]));
+  gSobject['validationError'] = function(messages) {
+    return gs.mc(gSobject,"setHtml",gs.list(["#validationError", gs.mc(messages,"join",gs.list([" - "]))]));
   }
-  gSobject.FrameworksView1 = function(map) { gs.passMapToObject(map,this); return this;};
-  if (arguments.length==1) {gSobject.FrameworksView1(arguments[0]); }
+  if (arguments.length == 1) {gs.passMapToObject(arguments[0],gSobject);};
   
   return gSobject;
 };

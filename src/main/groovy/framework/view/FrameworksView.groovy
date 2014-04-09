@@ -31,7 +31,7 @@ class FrameworksView {
         setHtml('#listFrameworks', html)
     }
 
-    def validationError(String message) {
-        setHtml('#validationError', message)
+    def validationError(List messages) {
+        setHtml('#validationError', messages.join(' - '))
     }
 }

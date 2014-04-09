@@ -2,7 +2,6 @@ package framework.presenter
 
 import framework.model.Framework
 import framework.model.FrameworksModel
-import org.codehaus.groovy.runtime.MethodClosure
 import spock.lang.Specification
 import framework.view.FrameworksView
 import spock.lang.Unroll
@@ -54,29 +53,30 @@ class PresenterSpec extends Specification {
         presenter.buttonAddFrameworkClick()
 
         then:
-        1 * view.validationError('No, no, no!')
+        1 * view.validationError({ it.size() == numberErrors})
         !presenter.frameworks
 
         where:
-        name    | url        | urlImage
-        null    | null       | null
-        ''      | ''         | ''
-        'name'  | ''         | null
-        'name'  | 'htt://'   | null
-        'name'  | 'http://<' | null
-        'name<' | 'https://' | null
-        'name'  | 'https://' | '<'
+        name    | url        | urlImage |numberErrors
+        null    | null       | null     |2
+        ''      | ''         | ''       |2
+        'name'  | ''         | null     |1
+        'name'  | 'htt://'   | null     |1
+        'name'  | 'http://<' | null     |1
+        'name<' | 'https://' | null     |1
+        'name'  | 'https://' | '<'      |2
+        'name'  | 'ht'       | '<'      |3
     }
 
     def 'on button add new framework'() {
         when:
         presenter.nameFramework = 'name'
         presenter.urlFramework = 'http://url'
-        presenter.urlImageFramework = 'urlImage'
+        presenter.urlImageFramework = 'https://urlImage'
         presenter.buttonAddFrameworkClick()
 
         then:
-        1 * model.addFramework('name', 'http://url', 'urlImage', presenter.addNewFrameworkToList)
+        1 * model.addFramework('name', 'http://url', 'https://urlImage', presenter.addNewFrameworkToList)
         !presenter.frameworks
     }
 
@@ -90,5 +90,20 @@ class PresenterSpec extends Specification {
         then:
         presenter.frameworks == [framework]
         1 * view.updateFrameworks(presenter.frameworks)
+    }
+
+    def 'test si'() {
+        given:
+        def a = 0
+
+        when:
+        presenter._if(true).
+                and(true).
+                and(false).
+                then({ a = 1}).
+                otherwise({ a = 2})
+
+        then:
+        a == 2
     }
 }
