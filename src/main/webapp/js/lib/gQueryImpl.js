@@ -1,7 +1,9 @@
-function JQueryUtils() {
-  var gSobject = gs.inherit(gs.baseClass,'JQueryUtils');
-  gSobject.clazz = { name: 'org.grooscript.web.JQueryUtils', simpleName: 'JQueryUtils'};
+//This script needs grooscript.js and jQuery to run
+function GQueryImpl() {
+  var gSobject = gs.inherit(gs.baseClass,'GQueryImpl');
+  gSobject.clazz = { name: 'org.grooscript.jquery.GQueryImpl', simpleName: 'GQueryImpl'};
   gSobject.clazz.superclass = { name: 'java.lang.Object', simpleName: 'Object'};
+  gSobject.clazz.interfaces = [{ name: 'org.grooscript.jquery.GQuery', simpleName: 'GQuery'}, ];
   gSobject.bind = function(selector, target, nameProperty, closure) {
     if (closure === undefined) closure = null;
     var sourceDom = $(selector);
@@ -67,17 +69,32 @@ function JQueryUtils() {
             console.log('Not supporting bind for selector ' + selector);
         }
   }
-  gSobject.existsId = function(name) {
-    return $("#" + name).length > 0
+  gSobject.existsId = function(id) {
+    return $("#" + id).length > 0
+  }
+  gSobject.existsName = function(name) {
+    return $("[name='" + name + "']").length > 0
   }
   gSobject.existsGroup = function(name) {
-    return $('input:radio[name=' + name + ']').length > 0
+    return $("input:radio[name='" + name + "']").length > 0
   }
   gSobject.bindEvent = function(id, name, func) {
     $('#'+id).on(name, func);
   }
-  gSobject.JQueryUtils1 = function(map) { gs.passMapToObject(map,this); return this;};
-  if (arguments.length==1) {gSobject.JQueryUtils1(arguments[0]); }
+  gSobject.doRemoteCall = function(url, type, params, onSuccess, onFailure, objectResult) {
+    if (objectResult === undefined) objectResult = null;
+    $.ajax({
+            type: type, //GET or POST
+            data: gs.toJavascript(params),
+            url: url
+        }).done(function(newData) {
+            onSuccess(gs.toGroovy(jQuery.parseJSON(newData), objectResult));
+        })
+        .fail(function(error) {
+            onFailure(error);
+        });
+  }
+  if (arguments.length == 1) {gs.passMapToObject(arguments[0],gSobject);};
   
   return gSobject;
 };

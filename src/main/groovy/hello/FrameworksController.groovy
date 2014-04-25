@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody
 import javax.sql.DataSource
 
 @Controller
-@EnableAutoConfiguration
 @RequestMapping("/frameworks")
 public class FrameworksController {
 

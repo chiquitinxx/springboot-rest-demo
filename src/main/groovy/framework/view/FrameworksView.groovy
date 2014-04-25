@@ -2,7 +2,7 @@ package framework.view
 
 import framework.model.Framework
 import org.grooscript.asts.GsNative
-import org.grooscript.builder.Builder
+import org.grooscript.builder.HtmlBuilder
 
 /**
  * Created by jorge on 01/03/14.
@@ -15,7 +15,7 @@ class FrameworksView {
     */}
 
     def updateFrameworks(List frameworks) {
-        def html = Builder.build {
+        def html = HtmlBuilder.build {
             ul {
                 frameworks.each { Framework framework ->
                     li {

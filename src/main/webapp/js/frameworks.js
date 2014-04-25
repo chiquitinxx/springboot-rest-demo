@@ -1,5 +1,5 @@
 require(['./common'], function () {
-    require(['JQueryUtils', 'grooscript-binder', 'grooscript-builder'], function() {
+    require(['gQueryImpl', 'grooscript-binder', 'grooscript-builder'], function() {
         require(['jquery', 'app/Framework',
             'app/FrameworksModel', 'app/FrameworksView', 'app/Presenter'], function($) {
 
@@ -7,10 +7,9 @@ require(['./common'], function () {
             presenter.model = FrameworksModel();
             presenter.view = FrameworksView();
 
-            var binder = Binder({jQueryUtils: JQueryUtils()});
+            var binder = Binder({gQuery: GQueryImpl()});
             $(document).ready(function() {
-                binder.bindAllProperties(presenter);
-                binder.bindAllMethods(presenter);
+                binder.call(presenter);
                 presenter.onLoad();
             });
         });

@@ -102,15 +102,15 @@
             }
             return result;
         },
-        invokeMethod: function(name,values) {
+        invokeMethod: function(name, values) {
             var i,newArgs = [];
             if (values !== null && values !== undefined) {
-                for (i=0; i < values.length ; i++) {
+                for (i=0; i < values.length; i++) {
                     newArgs[i] = values[i];
                 }
             }
             var f = this[name];
-            return f.apply(this,newArgs);
+            return f.apply(this, newArgs);
         },
         constructor : function() {
             return this;
@@ -165,7 +165,7 @@
     }
 
     gs.inherit = function(p,objectName) {
-        //    function inherit(p,objectName) {
+    //    function inherit(p,objectName) {
         if (p === null) throw TypeError();
         if (Object.create) {
             return expandWithMetaclass(Object.create(p),objectName);
@@ -1629,8 +1629,8 @@
 
     Number.prototype.byteValue = Number.prototype.doubleValue = Number.prototype.shortValue =
         Number.prototype.floatValue = Number.prototype.longValue = function() {
-            return this;
-        }
+        return this;
+    }
 
     /////////////////////////////////////////////////////////////////
     //String functions
@@ -1783,7 +1783,7 @@
     /////////////////////////////////////////////////////////////////
     // Misc Functions
     /////////////////////////////////////////////////////////////////
-    gs.classForName = function(name) {
+    gs.classForName = function(name, obj) {
         var result = null;
         try {
             var pos = name.indexOf(".");
@@ -1793,7 +1793,7 @@
             }
             result = eval(name);
         } catch (err) {
-            result = null;
+            result = obj;
         }
         return result;
     };
@@ -1917,20 +1917,28 @@
 
     //InstanceOf function
     gs.instanceOf = function(item, name) {
-        var classItem;
         var gotIt = false;
 
         if (name=="String")  {
-            return typeof(item)=='string';
-        } else if (name=="Number") {
-            return typeof(item)=='number';
+            return typeof(item) == 'string';
+        } else if (name == "Number") {
+            return typeof(item) == 'number';
         } else if (item.clazz) {
-            classItem = item.clazz;
-            while (classItem !== null && classItem !== undefined && !gotIt) {
-                if (classItem.name == name || classItem.simpleName == name) {
+            var classInfo;
+            classInfo = item.clazz;
+            while (classInfo !== null && classInfo !== undefined && !gotIt) {
+                if (classInfoContainsName(classInfo, name)) {
                     gotIt = true;
                 } else {
-                    classItem = classItem.superclass;
+                    classInfo = classInfo.superclass;
+                }
+            }
+            if (!gotIt && item.clazz.interfaces) {
+                var i;
+                for (i = 0; i < item.clazz.interfaces.length && !gotIt; i++) {
+                    if (classInfoContainsName(item.clazz.interfaces[i], name)) {
+                        gotIt = true;
+                    }
                 }
             }
         } else if (typeof item === "function" && name == 'Closure') {
@@ -1938,6 +1946,10 @@
         }
         return gotIt;
     };
+
+    function classInfoContainsName(classInfo, name) {
+        return classInfo.name == name || classInfo.simpleName == name;
+    }
 
     //Elvis operator
     gs.elvis = function(booleanExpression, trueExpression, falseExpression) {
@@ -2011,10 +2023,8 @@
 
     // spread operator (*)
     gs.spread = function(item) {
-        if (item !== null && item !== undefined) {
-            if (item instanceof Array) {
-                this.values = item;
-            }
+        if (item && item instanceof Array) {
+            this.values = item;
         }
     };
 
@@ -2032,7 +2042,7 @@
     }
 
     //Set a property of a class
-    gs.sp = function(item,nameProperty,value) {
+    gs.sp = function(item, nameProperty, value) {
 
         if (nameProperty == 'setProperty') {
             item[nameProperty] = value;
@@ -2048,7 +2058,13 @@
                 var nameFunction = 'set' + nameProperty.charAt(0).toUpperCase() + nameProperty.slice(1);
 
                 if (item[nameFunction] === undefined || item[nameFunction] === null || (typeof item[nameFunction] != "function")) {
-                    item[nameProperty] = value;
+                    if (item[nameProperty] === undefined &&
+                        item['setPropertyMissing'] !== undefined &&
+                        typeof item['setPropertyMissing'] === "function") {
+                        item['setPropertyMissing'](nameProperty, value);
+                    } else {
+                        item[nameProperty] = value;
+                    }
                 } else {
                     item[nameFunction](value);
                 }
@@ -2106,7 +2122,7 @@
                     if (item[nameProperty] !== undefined) {
                         return item[nameProperty];
                     } else {
-                        //Lets check in @Delegate
+                        //Lets check gp in @Delegate
                         if (item.clazz !== undefined) {
                             var addDelegate = mapAddDelegate[item.clazz.simpleName];
                             if (addDelegate !== null && addDelegate !== undefined) {
@@ -2131,7 +2147,12 @@
                                 return whereExecutes[nameFunction].apply(item, [item]);
                             }
                         }
-                        return item[nameProperty];
+
+                        if (item['propertyMissing'] !== undefined && typeof item['propertyMissing'] === "function") {
+                            return item.propertyMissing(nameProperty);
+                        } else {
+                            return item[nameProperty];
+                        }
                     }
                 }
             } else {
@@ -2235,7 +2256,7 @@
                         return whereExecutes[methodName].apply(item, joinParameters(item, values));
                     }
                 }
-                //Lets check in @Delegate
+                //Lets check mc in @Delegate
                 if (item.clazz !== undefined) {
                     var addDelegate = mapAddDelegate[item.clazz.simpleName];
                     if (addDelegate !== null && addDelegate !== undefined) {
@@ -2414,7 +2435,7 @@
         //TODO make any kinda cleanup if mixinsObjects growing
     };
 
-    function mixinSearching(item,methodName) {
+    function mixinSearching(item, methodName) {
         var result = null;
         var className = null;
         if (typeof(item) == 'string') {
@@ -2423,23 +2444,20 @@
         if (typeof(item) == 'object' && item.clazz !== undefined && item.clazz.simpleName !== undefined) {
             className = item.clazz.simpleName;
         }
-        //console.log(' className:'+className);
         if (className !== null) {
             var i, ourMixin=null;
             for (i = mixins.length - 1; i >= 0 && ourMixin === null; i--) {
                 var data = mixins[i];
-                //console.log(' mixin: '+data.name);
                 if (data.name == className) {
                     ourMixin = data.items;
                 }
             }
             if (ourMixin !== null) {
-                //console.log(' our: '+ourMixin+' - '+methodName);
                 for (i = 0; i < ourMixin.length && result === null; i++) {
-                    if (eval(ourMixin[i])[methodName]) {
-                        result = eval(ourMixin[i]);
+                    if (ourMixin[i][methodName]) {
+                        result = ourMixin[i];
                     } else {
-                        var classItem = eval(ourMixin[i]+'()');
+                        var classItem = ourMixin[i]();
                         if (classItem) {
                             var notStatic = classItem[methodName];
                             if (notStatic !== null && typeof notStatic === "function") {
@@ -2466,8 +2484,8 @@
         }
         if (ourMixin !== null) {
             for (i=0 ; i < ourMixin.length && result === null; i++) {
-                if (eval(ourMixin[i])[methodName]) {
-                    result = eval(ourMixin[i]);
+                if (ourMixin[i][methodName]) {
+                    result = ourMixin[i];
                 }
             }
         }
@@ -2605,50 +2623,61 @@
         }
     };
 
-    gs.toJavascript = function(message) {
+    gs.toJavascript = function(obj) {
+        if (obj !== null && obj !== undefined && gs.isGroovyObj(obj)) {
+            var result;
+            if (obj !== null && obj !== undefined && typeof(obj) !== "function") {
+                if (obj instanceof Array) {
+                    result = [];
+                    var i;
+                    for (i = 0; i < obj.length; i++) {
+                        result[result.length] = gs.toJavascript(obj[i]);
+                    }
+                } else {
+                    if (obj instanceof Object) {
+                        result = {};
+                        var ob;
+                        for (ob in obj) {
+                            if (!isMapProperty(ob)) {
+                                result[ob] = gs.toJavascript(obj[ob]);
+                            }
+                        }
+                    } else {
+                        result = obj;
+                    }
+                }
+            }
+            return result;
+        } else {
+            return obj;
+        }
+    };
+
+    gs.toGroovy = function(obj, objClass) {
         var result;
-        if (message !== null && message !== undefined && typeof(message) !== "function") {
-            if (message instanceof Array) {
-                result = [];
+        if (obj !== null && obj !== undefined && typeof(obj) !== "function") {
+            if (obj instanceof Array) {
+                result = gs.list([]);
                 var i;
-                for (i = 0; i < message.length; i++) {
-                    result[result.length] = gs.toJavascript(message[i]);
+                for (i = 0; i < obj.length; i++) {
+                    result.add(gs.toGroovy(obj[i], objClass));
                 }
             } else {
-                if (message instanceof Object) {
-                    result = {};
+                if (obj instanceof Object) {
                     var ob;
-                    for (ob in message) {
-                        if (!isMapProperty(ob)) {
-                            result[ob] = gs.toJavascript(message[ob]);
+                    if (objClass !== undefined && objClass !== null) {
+                        result = objClass();
+                        for (ob in obj) {
+                            result[ob] = gs.toGroovy(obj[ob]);
+                        }
+                    } else {
+                        result = gs.map();
+                        for (ob in obj) {
+                            result.add(ob, gs.toGroovy(obj[ob]));
                         }
                     }
                 } else {
-                    result = message;
-                }
-            }
-        }
-        return result;
-    };
-
-    gs.toGroovy = function(message) {
-        var result;
-        if (message !== null && message !== undefined && typeof(message) !== "function") {
-            if (message instanceof Array) {
-                result = gs.list([]);
-                var i;
-                for (i = 0; i < message.length; i++) {
-                    result.add(gs.toGroovy(message[i]));
-                }
-            } else {
-                var ob;
-                if (message instanceof Object) {
-                    result = gs.map();
-                    for (ob in message) {
-                        result.add(ob, gs.toGroovy(message[ob]));
-                    }
-                } else {
-                    result = message;
+                    result = obj;
                 }
             }
         }
@@ -2667,7 +2696,7 @@
 
     gs.isGroovyObj = function(maybeGroovyObject) {
         return maybeGroovyObject !== null &&
-            (maybeGroovyObject['withz'] !== undefined &&
+                (maybeGroovyObject['withz'] !== undefined &&
                 typeof(maybeGroovyObject['withz']) === "function")
             ||
             (maybeGroovyObject['clazz'] !== undefined &&

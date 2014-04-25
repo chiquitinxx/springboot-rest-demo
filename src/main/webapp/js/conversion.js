@@ -30,5 +30,9 @@ require(['./common'], function () {
                 $('#results').append('<pre>'+convertedCode.jsCode+'</pre>')
             });
         });
+
+        $(document).ready(function() {
+            groovyEditor.setValue('//Put your groovy code here');
+        });
     });
 });
