@@ -11,4 +11,8 @@ class Framework {
     boolean hasImage() {
         urlImage && ['.GIF', '.PNG', '.JPG'].any { urlImage.toUpperCase().endsWith(it)}
     }
+
+    boolean equals(Object other) {
+        other instanceof Framework && other.name == this.name
+    }
 }

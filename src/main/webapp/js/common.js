@@ -6,6 +6,6 @@ requirejs.config({
     }
 });
 
-requirejs(['jquery', 'grooscript'], function($) {
+requirejs(['jquery', 'grooscript-all'], function($) {
 
 });

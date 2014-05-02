@@ -17,9 +17,7 @@ function Presenter() {
     return gs.mc(gSobject.view,"updateFrameworks",[newFrameworks]);
   };
   gSobject.addNewFrameworkToList = function(framework) {
-    if (!gs.mc(gSobject.frameworks,"any",[function(it) {
-      return gs.equals(gs.gp(it,"name"), gs.gp(framework,"name"));
-    }])) {
+    if (!gs.mc(gSobject.frameworks,"contains",[framework])) {
       gs.mc(gSobject.frameworks,'leftShift', gs.list([framework]));
       return gs.mc(gSobject.view,"updateFrameworks",[gSobject.frameworks]);
     } else {

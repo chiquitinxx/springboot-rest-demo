@@ -92,7 +92,20 @@ class PresenterSpec extends Specification {
         1 * view.updateFrameworks(presenter.frameworks)
     }
 
-    def 'test si'() {
+    def 'can\t add a framework already in the list'() {
+        given:
+        def framework = new Framework(name: 'name')
+        presenter.frameworks = [framework]
+
+        when:
+        presenter.addNewFrameworkToList(framework)
+
+        then:
+        presenter.frameworks == [framework]
+        0 * _
+    }
+
+    def 'test _if'() {
         given:
         def a = 0
 

@@ -1,7 +1,9 @@
 package framework
 
+import framework.model.Framework
 import hello.FrameworksController
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 import javax.sql.DataSource
@@ -19,10 +21,13 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 class FrameworksControllerSpec extends Specification {
 
     private MockMvc mockMvc
-    private FrameworksController frameworksController = new FrameworksController(Mock(DataSource))
+    private SimpMessagingTemplate messagingTemplate = Mock(SimpMessagingTemplate)
+    private FrameworksController frameworksController
     private JdbcTemplate jdbcTemplate = Mock(JdbcTemplate)
 
     void setup() {
+        frameworksController = new FrameworksController()
+        frameworksController.simpMessagingTemplate = messagingTemplate
         frameworksController.jdbcTemplate = jdbcTemplate
         mockMvc = standaloneSetup(frameworksController).build()
     }
@@ -35,6 +40,7 @@ class FrameworksControllerSpec extends Specification {
         1 * jdbcTemplate.queryForList('Select * from FRAMEWORKS') >> [[NAME: 'Grails', URL: 'grails.org', URL_IMAGE: 'image']]
         response.andExpect(status().isOk())
                 .andExpect(content().string('[{"name":"Grails","url":"grails.org","urlImage":"image"}]'))
+        0 * _
     }
 
     def 'post a new framework'() {
@@ -48,5 +54,9 @@ class FrameworksControllerSpec extends Specification {
         1 * jdbcTemplate.update("insert into FRAMEWORKS values ('Spock', 'spock.org', 'image');")
         response.andExpect(status().isOk())
                 .andExpect(content().string('{"name":"Spock","url":"spock.org","urlImage":"image"}'))
+        1 * messagingTemplate.convertAndSend('/topic/newFramework', new Framework(
+                name: 'Spock', url: 'spock.org', urlImage: 'image'
+        ))
+        0 * _
     }
 }

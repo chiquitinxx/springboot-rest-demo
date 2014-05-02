@@ -18,14 +18,11 @@ import javax.sql.DataSource
 @RequestMapping("/frameworks")
 public class FrameworksController {
 
+    @Autowired
     JdbcTemplate jdbcTemplate
-    SimpMessagingTemplate template
 
     @Autowired
-    public FrameworksController(DataSource dataSource, SimpMessagingTemplate template) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource)
-        this.template = template
-    }
+    SimpMessagingTemplate simpMessagingTemplate
 
     @RequestMapping(method=RequestMethod.GET)
     public @ResponseBody List<Framework> allFramworks() {
@@ -38,7 +35,7 @@ public class FrameworksController {
     public @ResponseBody Framework insertFramework(@ModelAttribute("framework") Framework framework) {
         jdbcTemplate.update("insert into FRAMEWORKS values " +
                 "('${framework.name}', '${framework.url}', '${framework.urlImage?:''}');")
-        template.convertAndSend("/topic/newFramework", framework)
+        simpMessagingTemplate.convertAndSend("/topic/newFramework", framework)
         return framework
     }
 }

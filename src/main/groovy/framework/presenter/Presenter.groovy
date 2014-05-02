@@ -60,7 +60,7 @@ class Presenter {
     }
 
     def addNewFrameworkToList = { Framework framework ->
-        if (!frameworks.any { it.name == framework.name}) {
+        if (!frameworks.contains(framework)) {
             frameworks << framework
             view.updateFrameworks(frameworks)
         } else {
