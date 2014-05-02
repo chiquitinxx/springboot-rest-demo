@@ -60,8 +60,12 @@ class Presenter {
     }
 
     def addNewFrameworkToList = { Framework framework ->
-        frameworks << framework
-        view.updateFrameworks(frameworks)
+        if (!frameworks.any { it.name == framework.name}) {
+            frameworks << framework
+            view.updateFrameworks(frameworks)
+        } else {
+            println 'Repeated framework!'
+        }
     }
 
     def _if(eval) {

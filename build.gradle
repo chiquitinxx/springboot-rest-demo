@@ -44,10 +44,13 @@ configurations {
 }
 
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-web:1.0.2.RELEASE'
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat:1.0.2.RELEASE")
+    //compile 'org.springframework.boot:spring-boot-starter-web'
+    compile("org.springframework.boot:spring-boot-starter-websocket")
+    compile("org.springframework:spring-messaging")
+    //compile("org.springframework:spring-websocket")
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     //compile 'org.springframework.boot:spring-boot-starter-actuator'
-    compile 'org.codehaus.groovy:groovy-all:2.3.0-rc-1'
+    compile 'org.codehaus.groovy:groovy-all:2.3.0-rc-2'
     compile 'org.springframework:spring-jdbc:4.0.3.RELEASE'
     compile('org.grooscript:grooscript:0.5-SNAPSHOT') {
         exclude module: 'groovy'

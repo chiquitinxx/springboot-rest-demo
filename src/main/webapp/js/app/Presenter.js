@@ -17,8 +17,14 @@ function Presenter() {
     return gs.mc(gSobject.view,"updateFrameworks",[newFrameworks]);
   };
   gSobject.addNewFrameworkToList = function(framework) {
-    gs.mc(gSobject.frameworks,'leftShift', gs.list([framework]));
-    return gs.mc(gSobject.view,"updateFrameworks",[gSobject.frameworks]);
+    if (!gs.mc(gSobject.frameworks,"any",[function(it) {
+      return gs.equals(gs.gp(it,"name"), gs.gp(framework,"name"));
+    }])) {
+      gs.mc(gSobject.frameworks,'leftShift', gs.list([framework]));
+      return gs.mc(gSobject.view,"updateFrameworks",[gSobject.frameworks]);
+    } else {
+      return gs.println("Repeated framework!");
+    };
   };
   gSobject.and = function(eval, previousResult) {
     var result = (gs.bool(previousResult)) && (gs.mc(gSobject,"evaluation",[eval]));
