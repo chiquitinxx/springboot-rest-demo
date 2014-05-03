@@ -46,8 +46,9 @@ class Presenter {
         _if urlFramework && !validUrl(urlFramework) then insertError('Wrong url framework')
         _if urlImageFramework && !validUrl(urlImageFramework) then insertError('Wrong url image')
         _if ([nameFramework, urlFramework, urlImageFramework].any(hasEvilChars)) then insertError('Wrong chars')
+        _if existsNameFramework(nameFramework) then insertError("Framework ${nameFramework} already exists")
 
-        _if !validationErrors.size() then {
+        if (!validationErrors.size()) {
             model.addFramework(nameFramework, urlFramework, urlImageFramework, addNewFrameworkToList)
         }
 
@@ -66,6 +67,10 @@ class Presenter {
         } else {
             println 'Repeated framework!'
         }
+    }
+
+    private existsNameFramework(name) {
+        frameworks.any { it.name.toUpperCase() == name.toUpperCase() }
     }
 
     def _if(eval) {

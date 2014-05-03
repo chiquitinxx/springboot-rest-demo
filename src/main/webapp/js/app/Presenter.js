@@ -66,10 +66,16 @@ function Presenter() {
     gs.mc(gs.mc(gSobject,"_if",[(gs.bool(gSobject.urlFramework)) && (!gs.mc(gSobject,"validUrl",[gSobject.urlFramework]))]),"then",[(insertError.delegate!=undefined?gs.applyDelegate(insertError,insertError.delegate,["Wrong url framework"]):gs.executeCall(insertError, ["Wrong url framework"]))]);
     gs.mc(gs.mc(gSobject,"_if",[(gs.bool(gSobject.urlImageFramework)) && (!gs.mc(gSobject,"validUrl",[gSobject.urlImageFramework]))]),"then",[(insertError.delegate!=undefined?gs.applyDelegate(insertError,insertError.delegate,["Wrong url image"]):gs.executeCall(insertError, ["Wrong url image"]))]);
     gs.mc(gs.mc(gSobject,"_if",[gs.mc(gs.list([gSobject.nameFramework , gSobject.urlFramework , gSobject.urlImageFramework]),"any",[gSobject.hasEvilChars])]),"then",[(insertError.delegate!=undefined?gs.applyDelegate(insertError,insertError.delegate,["Wrong chars"]):gs.executeCall(insertError, ["Wrong chars"]))]);
-    gs.mc(gs.mc(gSobject,"_if",[!gs.mc(validationErrors,"size",[])]),"then",[function(it) {
-      return gs.mc(gSobject.model,"addFramework",[gSobject.nameFramework, gSobject.urlFramework, gSobject.urlImageFramework, gSobject.addNewFrameworkToList]);
-    }]);
+    gs.mc(gs.mc(gSobject,"_if",[gs.mc(gSobject,"existsNameFramework",[gSobject.nameFramework])]),"then",[(insertError.delegate!=undefined?gs.applyDelegate(insertError,insertError.delegate,["Framework " + (gSobject.nameFramework) + " already exists"]):gs.executeCall(insertError, ["Framework " + (gSobject.nameFramework) + " already exists"]))]);
+    if (!gs.mc(validationErrors,"size",[])) {
+      gs.mc(gSobject.model,"addFramework",[gSobject.nameFramework, gSobject.urlFramework, gSobject.urlImageFramework, gSobject.addNewFrameworkToList]);
+    };
     return gs.mc(gSobject.view,"validationError",[validationErrors]);
+  }
+  gSobject['existsNameFramework'] = function(name) {
+    return gs.mc(gSobject.frameworks,"any",[function(it) {
+      return gs.equals(gs.mc(gs.gp(it,"name"),"toUpperCase",[]), gs.mc(name,"toUpperCase",[]));
+    }]);
   }
   gSobject['_if'] = function(eval) {
     var result = gs.mc(gSobject,"evaluation",[eval]);
