@@ -8,7 +8,7 @@ import framework.view.FrameworksView
  * User: jorgefrancoleza
  * Date: 25/02/14
  */
-class Presenter {
+class Presenter implements ChainedIf {
 
     FrameworksView view
     FrameworksModel model
@@ -73,6 +73,7 @@ class Presenter {
         frameworks.any { it.name.toUpperCase() == name.toUpperCase() }
     }
 
+    /*
     def _if(eval) {
         def result = evaluation(eval)
         [and: and.rcurry(result), then: then.rcurry(result)]
@@ -98,5 +99,5 @@ class Presenter {
 
     def evaluation = { value ->
         value instanceof Closure ? value() : value
-    }
+    }*/
 }

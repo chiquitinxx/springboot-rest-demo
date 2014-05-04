@@ -3,6 +3,7 @@ function Framework() {
   var gSobject = gs.inherit(gs.baseClass,'Framework');
   gSobject.clazz = { name: 'framework.model.Framework', simpleName: 'Framework'};
   gSobject.clazz.superclass = { name: 'java.lang.Object', simpleName: 'Object'};
+  gSobject.id = null;
   gSobject.name = null;
   gSobject.url = null;
   gSobject.urlImage = null;
