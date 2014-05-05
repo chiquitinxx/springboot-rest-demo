@@ -37,7 +37,7 @@ ul {
 
 li {
     padding-top: 10px;
-    width: 150px;
+    width: 200px;
     text-align: center;
     list-style: none;
     display: inline-block;
@@ -45,8 +45,8 @@ li {
 
 .logo {
     padding-left: 25px;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     overflow: hidden;
 }
 
