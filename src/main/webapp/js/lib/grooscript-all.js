@@ -1,4 +1,4 @@
-//Grooscript Version 0.5-SNAPSHOT Apache 2 License
+//Grooscript Version 0.5 Apache 2 License
 (function() {
     var gs = function(obj) {
         if (obj instanceof gs) return obj;
@@ -2881,8 +2881,16 @@ function GQueryImpl() {
             onSuccess(gs.toGroovy(jQuery.parseJSON(newData), objectResult));
         })
         .fail(function(error) {
-            onFailure(error);
+            if (onFailure) {
+                onFailure(error);
+            }
         });
+  }
+  gSobject.onReady = function(func) {
+    $(document).ready(func);
+  }
+  gSobject.html = function(selector, text) {
+    $(selector).text(text);
   }
   if (arguments.length == 1) {gs.passMapToObject(arguments[0],gSobject);};
   

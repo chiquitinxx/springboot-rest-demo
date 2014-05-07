@@ -32,7 +32,7 @@ require(['./common'], function () {
         });
 
         $(document).ready(function() {
-            groovyEditor.setValue('//Put your groovy code here');
+            groovyEditor.setValue('//Traits example\ntrait FlyingAbility {\n  String fly() { "I\'m flying!" }\n}\n\nclass Bird implements FlyingAbility {}\ndef b = new Bird()\nprintln b.fly()\nassert b.fly() == "I\'m flying!"');
         });
     });
 });

@@ -4,8 +4,7 @@ require(['./common'], function () {
         'sockjs-0.3.4', 'stomp'], function($) {
 
         presenter = Presenter();
-        presenter.model = FrameworksModel();
-        presenter.view = FrameworksView();
+        presenter.start();
 
         $(document).ready(function() {
             connect();

@@ -10,7 +10,7 @@ Create idea project:
 
     ./gradlew idea
 
-Run project:
+Run project, need Mongo Db 2.4+ installed and running:
 
     ./gradlew bootRun
 
@@ -18,4 +18,4 @@ Convert logic groovy files to javascript:
 
     ./gradlew convert
 
-Demo running in http://localhost:9000/
+Demo running in http://localhost:8080/

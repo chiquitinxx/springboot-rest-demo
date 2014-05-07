@@ -49,6 +49,10 @@ function Presenter() {
     gSobject.urlImageFramework = "";
     return gs.mc(gSobject.model,"loadFrameworks",[gSobject.updateFrameworksList]);
   }
+  gSobject['start'] = function(it) {
+    gSobject.view = FrameworksView();
+    return gSobject.model = FrameworksModel();
+  }
   gSobject['validUrl'] = function(url) {
     return gs.mc(gs.list(["http://" , "https://"]),"any",[function(it) {
       return (gs.bool(url)) && (gs.mc(url,"startsWith",[it]));

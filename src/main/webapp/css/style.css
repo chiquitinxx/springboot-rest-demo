@@ -83,3 +83,11 @@ li {
     background: black;
     color: white;
 }
+
+#mainTitle {
+    position: absolute;
+    top: 75px;
+    left: 600px;
+    font-family: Monaco;
+    font-size: 2em;
+}
