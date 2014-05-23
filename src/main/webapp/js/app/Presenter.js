@@ -1,4 +1,3 @@
-//Grooscript converted file
 function Presenter() {
   var gSobject = gs.inherit(gs.baseClass,'Presenter');
   gSobject.clazz = { name: 'framework.presenter.Presenter', simpleName: 'Presenter'};
@@ -67,8 +66,8 @@ function Presenter() {
     };
     gs.mc(gs.mc(gSobject,"_if",[!gSobject.nameFramework]),"then",[(insertError.delegate!=undefined?gs.applyDelegate(insertError,insertError.delegate,["Missing name framework"]):gs.executeCall(insertError, ["Missing name framework"]))]);
     gs.mc(gs.mc(gSobject,"_if",[!gSobject.urlFramework]),"then",[(insertError.delegate!=undefined?gs.applyDelegate(insertError,insertError.delegate,["Missing url framework"]):gs.executeCall(insertError, ["Missing url framework"]))]);
-    gs.mc(gs.mc(gSobject,"_if",[(gs.bool(gSobject.urlFramework)) && (!gs.mc(gSobject,"validUrl",[gSobject.urlFramework]))]),"then",[(insertError.delegate!=undefined?gs.applyDelegate(insertError,insertError.delegate,["Wrong url framework"]):gs.executeCall(insertError, ["Wrong url framework"]))]);
-    gs.mc(gs.mc(gSobject,"_if",[(gs.bool(gSobject.urlImageFramework)) && (!gs.mc(gSobject,"validUrl",[gSobject.urlImageFramework]))]),"then",[(insertError.delegate!=undefined?gs.applyDelegate(insertError,insertError.delegate,["Wrong url image"]):gs.executeCall(insertError, ["Wrong url image"]))]);
+    gs.mc(gs.mc(gs.mc(gSobject,"_if",[gSobject.urlFramework]),"and",[!gs.mc(gSobject,"validUrl",[gSobject.urlFramework])]),"then",[(insertError.delegate!=undefined?gs.applyDelegate(insertError,insertError.delegate,["Wrong url framework"]):gs.executeCall(insertError, ["Wrong url framework"]))]);
+    gs.mc(gs.mc(gs.mc(gSobject,"_if",[gSobject.urlImageFramework]),"and",[!gs.mc(gSobject,"validUrl",[gSobject.urlImageFramework])]),"then",[(insertError.delegate!=undefined?gs.applyDelegate(insertError,insertError.delegate,["Wrong url image"]):gs.executeCall(insertError, ["Wrong url image"]))]);
     gs.mc(gs.mc(gSobject,"_if",[gs.mc(gs.list([gSobject.nameFramework , gSobject.urlFramework , gSobject.urlImageFramework]),"any",[gSobject.hasEvilChars])]),"then",[(insertError.delegate!=undefined?gs.applyDelegate(insertError,insertError.delegate,["Wrong chars"]):gs.executeCall(insertError, ["Wrong chars"]))]);
     gs.mc(gs.mc(gSobject,"_if",[gs.mc(gSobject,"existsNameFramework",[gSobject.nameFramework])]),"then",[(insertError.delegate!=undefined?gs.applyDelegate(insertError,insertError.delegate,["Framework " + (gSobject.nameFramework) + " already exists"]):gs.executeCall(insertError, ["Framework " + (gSobject.nameFramework) + " already exists"]))]);
     if (!gs.mc(validationErrors,"size",[])) {

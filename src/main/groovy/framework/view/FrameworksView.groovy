@@ -12,6 +12,7 @@ class FrameworksView {
     @GsNative
     def setHtml(String selector, String html) {/*
         $(selector).html(html);
+        AniJS.run();
     */}
 
     def updateFrameworks(List frameworks) {
@@ -19,7 +20,7 @@ class FrameworksView {
             ul {
                 frameworks.each { Framework framework ->
                     li {
-                        div(class: 'logo') {
+                        div(class: 'logo', 'data-anijs': 'if: mouseenter, do: flip animated') {
                             img src: framework.hasImage() ? framework.urlImage : 'img/nologo.png'
                         }
                         a (href: framework.url, framework.name)

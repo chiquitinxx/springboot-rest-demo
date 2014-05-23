@@ -51,8 +51,8 @@ class Presenter {
 
         _if !nameFramework then insertError('Missing name framework')
         _if !urlFramework then insertError('Missing url framework')
-        _if urlFramework && !validUrl(urlFramework) then insertError('Wrong url framework')
-        _if urlImageFramework && !validUrl(urlImageFramework) then insertError('Wrong url image')
+        _if urlFramework and !validUrl(urlFramework) then insertError('Wrong url framework')
+        _if urlImageFramework and !validUrl(urlImageFramework) then insertError('Wrong url image')
         _if ([nameFramework, urlFramework, urlImageFramework].any(hasEvilChars)) then insertError('Wrong chars')
         _if existsNameFramework(nameFramework) then insertError("Framework ${nameFramework} already exists")
 

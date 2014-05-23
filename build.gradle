@@ -1,6 +1,5 @@
 buildscript {
     repositories {
-        mavenLocal()
         mavenCentral()
     }
     dependencies {
@@ -16,7 +15,7 @@ apply plugin: 'grooscript'
 apply plugin: 'war'
 
 war {
-    baseName = 'rest-h2-grooscript'
+    baseName = 'rest-mongo-grooscript'
     version =  '0.1.0'
 }
 
@@ -30,7 +29,7 @@ grooscript {
 }
 
 repositories {
-    mavenLocal()
+    //mavenLocal()
     mavenCentral()
 }
 
@@ -40,7 +39,7 @@ dependencies {
     compile "org.springframework.data:spring-data-commons:1.6.2.RELEASE"
     compile "org.springframework.data:spring-data-mongodb:1.4.0.RELEASE"
 
-    compile 'org.codehaus.groovy:groovy-all:2.3.0'
+    compile 'org.codehaus.groovy:groovy-all:2.3.1'
     compile('org.grooscript:grooscript:0.5') {
         exclude module: 'groovy'
     }

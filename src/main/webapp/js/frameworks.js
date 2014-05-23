@@ -1,7 +1,7 @@
 require(['./common'], function () {
     require(['jquery', 'app/Framework',
         'app/FrameworksModel', 'app/FrameworksView', 'app/Presenter',
-        'sockjs-0.3.4', 'stomp'], function($) {
+        'sockjs-0.3.4', 'stomp', 'anijs-min'], function($) {
 
         presenter = Presenter();
         presenter.start();

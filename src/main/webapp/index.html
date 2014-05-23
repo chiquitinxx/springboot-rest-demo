@@ -3,6 +3,7 @@
 <head>
     <title>Demo using spring boot with grooscript</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="css/animate.css">
     <script data-main="js/frameworks" src="js/lib/require.js"></script>
 </head>
 <body>
@@ -10,9 +11,10 @@
         <p>Name:<input type="text" id="nameFramework"/>*</p>
         <p>Url framework:<input type="text" id="urlFramework"/>*</p>
         <p>Url image framework:<input type="text" id="urlImageFramework"/></p>
-        <input type="button" class="doButton" id="buttonAddFramework" value="Add framework"/>
+        <input type="button" class="doButton" id="buttonAddFramework" value="Add framework"
+                data-anijs="if: mousedown, do: shake animated, to: #validationError"/>
         <div id="validationError"></div>
-        <div id="mainTitle">Groovy Frameworks</div>
+        <div id="mainTitle" data-anijs="if: mouseenter, do: tada animated">Groovy Frameworks</div>
     </div>
     <div id="listFrameworks"></div>
 </body>
