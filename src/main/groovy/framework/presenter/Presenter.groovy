@@ -56,11 +56,18 @@ class Presenter {
         _if ([nameFramework, urlFramework, urlImageFramework].any(hasEvilChars)) then insertError('Wrong chars')
         _if existsNameFramework(nameFramework) then insertError("Framework ${nameFramework} already exists")
 
-        if (!validationErrors.size()) {
+        if (!validationErrors) {
             model.addFramework(nameFramework, urlFramework, urlImageFramework, addNewFrameworkToList)
+            resetFields()
         }
 
         view.validationError(validationErrors)
+    }
+
+    def resetFields() {
+        setUrlFramework('')
+        setNameFramework('')
+        setUrlImageFramework('')
     }
 
     def updateFrameworksList = { List<Framework> newFrameworks ->
@@ -104,7 +111,7 @@ class Presenter {
         }
     }
 
-    def evaluation = { value ->
+    private evaluation = { value ->
         value instanceof Closure ? value() : value
     }
 }
