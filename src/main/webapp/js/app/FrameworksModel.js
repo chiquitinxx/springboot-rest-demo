@@ -1,3 +1,4 @@
+//Grooscript converted file
 function FrameworksModel() {
   var gSobject = gs.inherit(gs.baseClass,'FrameworksModel');
   gSobject.clazz = { name: 'framework.model.FrameworksModel', simpleName: 'FrameworksModel'};

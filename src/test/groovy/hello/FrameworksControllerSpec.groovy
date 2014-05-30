@@ -56,7 +56,7 @@ class FrameworksControllerSpec extends Specification {
         then:
         1 * repository.save(newFramework)
         response.andExpect(status().isOk())
-                .andExpect(content().string('{"id":null,"name":"Spock","url":"spock.org","urlImage":"image"}'))
+                .andExpect(content().string('{"id":null,"name":"Spock","url":"spock.org","urlImage":"image","github":false}'))
         1 * messagingTemplate.convertAndSend('/topic/newFramework', newFramework)
         0 * _
     }

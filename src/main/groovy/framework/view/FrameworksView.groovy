@@ -21,7 +21,11 @@ class FrameworksView {
                 frameworks.each { Framework framework ->
                     li {
                         div(class: 'logo', 'data-anijs': 'if: mouseenter, do: flip animated') {
-                            img src: framework.hasImage() ? framework.urlImage : 'img/nologo.png'
+                            if (!framework.hasImage() && framework.isGithub()) {
+                                img src: 'img/github.png'
+                            } else {
+                                img src: framework.hasImage() ? framework.urlImage : 'img/nologo.png'
+                            }
                         }
                         a (href: framework.url, framework.name)
                     }

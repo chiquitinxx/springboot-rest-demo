@@ -1,3 +1,4 @@
+//Grooscript converted file
 function Presenter() {
   var gSobject = gs.inherit(gs.baseClass,'Presenter');
   gSobject.clazz = { name: 'framework.presenter.Presenter', simpleName: 'Presenter'};

@@ -1,3 +1,4 @@
+//Grooscript converted file
 function ConvertedCode() {
   var gSobject = gs.inherit(gs.baseClass,'ConvertedCode');
   gSobject.clazz = { name: 'conversion.ConvertedCode', simpleName: 'ConvertedCode'};

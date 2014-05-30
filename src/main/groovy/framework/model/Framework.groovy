@@ -16,4 +16,8 @@ class Framework {
     boolean equals(Object other) {
         other instanceof Framework && other.name == this.name
     }
+
+    boolean isGithub()  {
+        url.contains('github.com')
+    }
 }

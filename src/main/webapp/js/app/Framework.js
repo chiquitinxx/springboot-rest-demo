@@ -1,3 +1,4 @@
+//Grooscript converted file
 function Framework() {
   var gSobject = gs.inherit(gs.baseClass,'Framework');
   gSobject.clazz = { name: 'framework.model.Framework', simpleName: 'Framework'};
@@ -13,6 +14,9 @@ function Framework() {
   }
   gSobject['equals'] = function(other) {
     return (gs.instanceOf(other, "Framework")) && (gs.equals(gs.gp(other,"name"), gs.gp(gs.thisOrObject(this,gSobject),"name")));
+  }
+  gSobject['isGithub'] = function(it) {
+    return gs.mc(gSobject.url,"contains",["github.com"]);
   }
   if (arguments.length == 1) {gs.passMapToObject(arguments[0],gSobject);};
   
