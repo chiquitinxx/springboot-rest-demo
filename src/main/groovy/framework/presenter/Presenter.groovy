@@ -3,9 +3,6 @@ package framework.presenter
 import framework.model.Framework
 import framework.model.FrameworksModel
 import framework.view.FrameworksView
-import org.grooscript.jquery.Binder
-import org.grooscript.jquery.GQuery
-import org.grooscript.jquery.GQueryImpl
 
 /**
  * User: jorgefrancoleza
@@ -55,6 +52,8 @@ class Presenter {
         _if urlImageFramework and !validUrl(urlImageFramework) then insertError('Wrong url image')
         _if ([nameFramework, urlFramework, urlImageFramework].any(hasEvilChars)) then insertError('Wrong chars')
         _if existsNameFramework(nameFramework) then insertError("Framework ${nameFramework} already exists")
+        //_if nameFramework and !nameFramework.toUpperCase().
+        //        startsWith('G') then insertError("Not enought 'G'rovier framework.")
 
         if (!validationErrors) {
             model.addFramework(nameFramework, urlFramework, urlImageFramework, addNewFrameworkToList)

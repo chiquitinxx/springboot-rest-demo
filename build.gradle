@@ -1,9 +1,13 @@
 buildscript {
+    ext {
+        springBootVersion = '1.0.2.RELEASE'
+        groovyVersion = '2.3.2'
+    }
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.0.2.RELEASE'
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath 'org.grooscript:grooscript-gradle-plugin:0.3'
     }
 }
@@ -16,7 +20,7 @@ apply plugin: 'war'
 
 war {
     baseName = 'rest-mongo-grooscript'
-    version =  '0.1.0'
+    version =  '0.2.0'
 }
 
 grooscript {
@@ -39,8 +43,8 @@ dependencies {
     compile "org.springframework.data:spring-data-commons:1.6.2.RELEASE"
     compile "org.springframework.data:spring-data-mongodb:1.4.0.RELEASE"
 
-    compile 'org.codehaus.groovy:groovy-all:2.3.1'
-    compile('org.grooscript:grooscript:0.5') {
+    compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    compile('org.grooscript:grooscript:0.5.1') {
         exclude module: 'groovy'
     }
     testCompile('org.spockframework:spock-core:0.7-groovy-2.0') {
