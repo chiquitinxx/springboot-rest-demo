@@ -2,7 +2,7 @@ function FrameworksView() {
   var gSobject = gs.inherit(gs.baseClass,'FrameworksView');
   gSobject.clazz = { name: 'framework.view.FrameworksView', simpleName: 'FrameworksView'};
   gSobject.clazz.superclass = { name: 'java.lang.Object', simpleName: 'Object'};
-  gSobject.setHtml = function(selector, html) {
+  gSobject.putHtml = function(selector, html) {
     $(selector).html(html);
         AniJS.run();
   }
@@ -23,10 +23,10 @@ function FrameworksView() {
         }]);
       }], gSobject);
     }]);
-    return gs.mc(gSobject,"setHtml",["#listFrameworks", html]);
+    return gs.mc(gSobject,"putHtml",["#listFrameworks", html]);
   }
   gSobject['validationError'] = function(messages) {
-    return gs.mc(gSobject,"setHtml",["#validationError", gs.mc(messages,"join",[" - "])]);
+    return gs.mc(gSobject,"putHtml",["#validationError", gs.mc(messages,"join",[" - "])]);
   }
   if (arguments.length == 1) {gs.passMapToObject(arguments[0],gSobject);};
   

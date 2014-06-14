@@ -10,7 +10,7 @@ import org.grooscript.builder.HtmlBuilder
 class FrameworksView {
 
     @GsNative
-    def setHtml(String selector, String html) {/*
+    void putHtml(String selector, String html) {/*
         $(selector).html(html);
         AniJS.run();
     */}
@@ -33,10 +33,10 @@ class FrameworksView {
             }
         }
 
-        setHtml('#listFrameworks', html)
+        putHtml('#listFrameworks', html)
     }
 
     def validationError(List messages) {
-        setHtml('#validationError', messages.join(' - '))
+        putHtml('#validationError', messages.join(' - '))
     }
 }

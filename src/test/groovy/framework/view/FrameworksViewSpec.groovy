@@ -18,7 +18,7 @@ class FrameworksViewSpec extends Specification {
 
     def setup() {
         htmlResult = ''
-        view.metaClass.setHtml = { String selector, String html ->
+        view.metaClass.putHtml = { String selector, String html ->
             if (selector == '#listFrameworks') {
                 htmlResult = html
             } else {

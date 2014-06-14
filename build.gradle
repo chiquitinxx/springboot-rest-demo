@@ -1,7 +1,7 @@
 buildscript {
     ext {
         springBootVersion = '1.0.2.RELEASE'
-        groovyVersion = '2.3.2'
+        groovyVersion = '2.3.3'
     }
     repositories {
         mavenLocal()
@@ -42,18 +42,23 @@ repositories {
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-websocket")
     compile("org.springframework:spring-messaging")
-    compile "org.springframework.data:spring-data-commons:1.6.2.RELEASE"
-    compile "org.springframework.data:spring-data-mongodb:1.4.0.RELEASE"
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    //compile "org.springframework.data:spring-data-commons:1.6.2.RELEASE"
+    //compile "org.springframework.data:spring-data-mongodb:1.4.0.RELEASE"
 
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     compile('org.grooscript:grooscript:0.5.2-SNAPSHOT') {
         exclude module: 'groovy'
     }
+
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+
     testCompile('org.spockframework:spock-core:0.7-groovy-2.0') {
         exclude module: 'groovy-all'
     }
-    testCompile 'org.springframework:spring-test:4.0.4.RELEASE'
-    testCompile 'org.objenesis:objenesis:1.2'
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    //testCompile 'org.springframework:spring-test:4.0.4.RELEASE'
+    //testCompile 'org.objenesis:objenesis:1.2'
     testCompile 'cglib:cglib-nodep:2.2.2'
 }
 
