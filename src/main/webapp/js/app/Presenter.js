@@ -1,7 +1,7 @@
 function Presenter() {
-  var gSobject = gs.inherit(gs.baseClass,'Presenter');
+  var gSobject = MyIf();
   gSobject.clazz = { name: 'framework.presenter.Presenter', simpleName: 'Presenter'};
-  gSobject.clazz.superclass = { name: 'java.lang.Object', simpleName: 'Object'};
+  gSobject.clazz.superclass = { name: 'framework.presenter.MyIf', simpleName: 'MyIf'};
   gSobject.view = null;
   gSobject.model = null;
   gSobject.frameworks = gs.list([]);
@@ -22,24 +22,6 @@ function Presenter() {
     } else {
       return gs.println("Repeated framework!");
     };
-  };
-  gSobject.and = function(eval, previousResult) {
-    var result = (gs.bool(previousResult)) && (gs.mc(gSobject,"evaluation",[eval]));
-    return gs.map().add("and",gs.mc(gSobject.and,"rcurry",[result])).add("then",gs.mc(gSobject.then,"rcurry",[result]));
-  };
-  gSobject.then = function(closure, result) {
-    if (gs.bool(result)) {
-      (closure.delegate!=undefined?gs.applyDelegate(closure,closure.delegate,[]):gs.executeCall(closure, []));
-    };
-    return gs.map().add("otherwise",gs.mc(gSobject.otherwise,"rcurry",[result]));
-  };
-  gSobject.otherwise = function(closure, result) {
-    if (!gs.bool(result)) {
-      return (closure.delegate!=undefined?gs.applyDelegate(closure,closure.delegate,[]):gs.executeCall(closure, []));
-    };
-  };
-  gSobject.evaluation = function(value) {
-    return (gs.instanceOf(value, "Closure") ? (value.delegate!=undefined?gs.applyDelegate(value,value.delegate,[]):gs.executeCall(value, [])) : value);
   };
   gSobject['onLoad'] = function(it) {
     gSobject.frameworks = gs.list([]);
@@ -85,10 +67,6 @@ function Presenter() {
     return gs.mc(gSobject.frameworks,"any",[function(it) {
       return gs.equals(gs.mc(gs.gp(it,"name"),"toUpperCase",[]), gs.mc(name,"toUpperCase",[]));
     }]);
-  }
-  gSobject['_if'] = function(eval) {
-    var result = gs.mc(gSobject,"evaluation",[eval]);
-    return gs.map().add("and",gs.mc(gSobject.and,"rcurry",[result])).add("then",gs.mc(gSobject.then,"rcurry",[result]));
   }
   if (arguments.length == 1) {gs.passMapToObject(arguments[0],gSobject);};
   

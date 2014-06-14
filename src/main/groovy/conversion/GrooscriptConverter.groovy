@@ -3,7 +3,6 @@ package conversion
 import org.grooscript.convert.GsConverter
 import org.grooscript.test.JsTestResult
 import org.grooscript.util.GrooScriptException
-import org.springframework.stereotype.Service
 
 import javax.script.Bindings
 import javax.script.ScriptEngine
@@ -13,7 +12,6 @@ import javax.script.ScriptEngineManager
  * User: jorgefrancoleza
  * Date: 15/03/14
  */
-@Service
 class GrooscriptConverter {
 
     ConvertedCode convertCode(String groovyCode) {
