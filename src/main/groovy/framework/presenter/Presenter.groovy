@@ -46,6 +46,7 @@ class Presenter {
             return { validationErrors << errorMessage }
         }
 
+        //Same to _if().then()
         _if !nameFramework then insertError('Missing name framework')
         _if !urlFramework then insertError('Missing url framework')
         _if urlFramework and !validUrl(urlFramework) then insertError('Wrong url framework')

@@ -1,4 +1,3 @@
-//Grooscript converted file
 function Presenter() {
   var gSobject = gs.inherit(gs.baseClass,'Presenter');
   gSobject.clazz = { name: 'framework.presenter.Presenter', simpleName: 'Presenter'};
@@ -78,9 +77,9 @@ function Presenter() {
     return gs.mc(gSobject.view,"validationError",[validationErrors]);
   }
   gSobject['resetFields'] = function(it) {
-    gs.mc(this,"setUrlFramework",[""]);
-    gs.mc(this,"setNameFramework",[""]);
-    return gs.mc(this,"setUrlImageFramework",[""]);
+    gs.mc(this,"setUrlFramework",[""], gSobject);
+    gs.mc(this,"setNameFramework",[""], gSobject);
+    return gs.mc(this,"setUrlImageFramework",[""], gSobject);
   }
   gSobject['existsNameFramework'] = function(name) {
     return gs.mc(gSobject.frameworks,"any",[function(it) {

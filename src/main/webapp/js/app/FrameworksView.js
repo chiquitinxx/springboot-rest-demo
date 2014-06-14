@@ -1,4 +1,3 @@
-//Grooscript converted file
 function FrameworksView() {
   var gSobject = gs.inherit(gs.baseClass,'FrameworksView');
   gSobject.clazz = { name: 'framework.view.FrameworksView', simpleName: 'FrameworksView'};
@@ -14,15 +13,15 @@ function FrameworksView() {
           return gs.mc(this,"li",[function(it) {
             gs.mc(this,"div",[gs.map().add("class","logo").add("data-anijs","if: mouseenter, do: flip animated"), function(it) {
               if ((!gs.mc(framework,"hasImage",[])) && (gs.mc(framework,"isGithub",[]))) {
-                return gs.mc(this,"img",[gs.map().add("src","img/github.png")]);
+                return gs.mc(this,"img",[gs.map().add("src","img/github.png")], gSobject);
               } else {
-                return gs.mc(this,"img",[gs.map().add("src",(gs.mc(framework,"hasImage",[]) ? gs.gp(framework,"urlImage") : "img/nologo.png"))]);
+                return gs.mc(this,"img",[gs.map().add("src",(gs.mc(framework,"hasImage",[]) ? gs.gp(framework,"urlImage") : "img/nologo.png"))], gSobject);
               };
-            }]);
-            return gs.mc(this,"a",[gs.map().add("href",gs.gp(framework,"url")), gs.gp(framework,"name")]);
-          }]);
+            }], gSobject);
+            return gs.mc(this,"a",[gs.map().add("href",gs.gp(framework,"url")), gs.gp(framework,"name")], gSobject);
+          }], gSobject);
         }]);
-      }]);
+      }], gSobject);
     }]);
     return gs.mc(gSobject,"setHtml",["#listFrameworks", html]);
   }

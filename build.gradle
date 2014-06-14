@@ -4,11 +4,13 @@ buildscript {
         groovyVersion = '2.3.2'
     }
     repositories {
+        mavenLocal()
         mavenCentral()
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath 'org.grooscript:grooscript-gradle-plugin:0.3'
+        //classpath 'org.grooscript:grooscript-gradle-plugin:0.3'
+        classpath 'org.grooscript:grooscript-gradle-plugin:0.4-SNAPSHOT'
     }
 }
 
@@ -20,7 +22,7 @@ apply plugin: 'war'
 
 war {
     baseName = 'rest-mongo-grooscript'
-    version =  '0.2.0'
+    version =  '0.3.0'
 }
 
 grooscript {
@@ -33,7 +35,7 @@ grooscript {
 }
 
 repositories {
-    //mavenLocal()
+    mavenLocal()
     mavenCentral()
 }
 
@@ -44,7 +46,7 @@ dependencies {
     compile "org.springframework.data:spring-data-mongodb:1.4.0.RELEASE"
 
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
-    compile('org.grooscript:grooscript:0.5.1') {
+    compile('org.grooscript:grooscript:0.5.2-SNAPSHOT') {
         exclude module: 'groovy'
     }
     testCompile('org.spockframework:spock-core:0.7-groovy-2.0') {
@@ -56,5 +58,8 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.11'
+    gradleVersion = '2.0-rc-1'
+    //gradleVersion = '1.11'
 }
+
+bootRun.dependsOn thread
