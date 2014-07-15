@@ -1,4 +1,5 @@
 body {
+    width: 100%;
     margin: 0;
     font-family: Lato;
     font-size: 22px;
@@ -90,4 +91,29 @@ li {
     left: 600px;
     font-family: Monaco;
     font-size: 2em;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    max-height: 100px;
+    background-color: coral;
+    font-family: Monaco;
+}
+
+.table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle;
 }

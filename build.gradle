@@ -28,6 +28,7 @@ grooscript {
     source = ['src/main/groovy/framework/model',
             'src/main/groovy/framework/view',
             'src/main/groovy/framework/presenter/Presenter.groovy',
+            'src/main/groovy/game',
             'src/main/groovy/conversion/ConvertedCode.groovy']
     classPath = ['src/main/groovy']
     initialText = '//Grooscript converted file'
