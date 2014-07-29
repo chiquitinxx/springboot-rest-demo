@@ -1,37 +1,37 @@
 buildscript {
     ext {
         springBootVersion = '1.1.4.RELEASE'
-        groovyVersion = '2.3.4'
+        groovyVersion = '2.3.6'
     }
     repositories {
+        jcenter()
         //mavenLocal()
         mavenCentral()
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath 'org.grooscript:grooscript-gradle-plugin:0.4'
+        classpath "org.grooscript:grooscript-gradle-plugin:0.5"
     }
 }
 
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-apply plugin: 'grooscript'
+apply plugin: "org.grooscript.conversion"
 apply plugin: 'war'
 
 war {
     baseName = 'rest-mongo-grooscript'
-    version =  '0.4.0'
+    version =  '0.5.0'
 }
 
 grooscript {
-    source = ['src/main/groovy/framework/model',
-            'src/main/groovy/framework/view',
-            'src/main/groovy/framework/presenter/Presenter.groovy',
-            'src/main/groovy/game',
+    source = ['src/main/groovy/framework/presenter/Presenter.groovy',
+            'src/main/groovy/game/GamePresenter.groovy',
             'src/main/groovy/conversion/ConvertedCode.groovy']
     classPath = ['src/main/groovy']
     initialText = '//Grooscript converted file'
+    convertDependencies = true
 }
 
 repositories {
@@ -47,6 +47,7 @@ dependencies {
     //compile "org.springframework.data:spring-data-mongodb:1.4.0.RELEASE"
 
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    compile "org.codehaus.groovy:groovy-templates:${groovyVersion}"
     compile('org.grooscript:grooscript:0.5.2') {
         exclude module: 'groovy'
     }

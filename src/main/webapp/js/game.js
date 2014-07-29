@@ -1,6 +1,5 @@
 require(['./common'], function () {
-    require(['jquery', 'grooscript-all', 'app/Cell',
-        'app/Game', 'app/GamePresenter'], function($) {
+    require(['jquery', 'grooscript-all', 'app/GamePresenter'], function($) {
 
         $(document).ready(function() {
             presenter = GamePresenter();
