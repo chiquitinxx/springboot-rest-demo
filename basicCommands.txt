@@ -1,4 +1,0 @@
-curl localhost:9000/hello-world
-curl -X POST --data "name=Jorge" curl localhost:9000/hello-world
-
-./gradlew bootRun

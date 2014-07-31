@@ -18,8 +18,10 @@ public class HelloController {
     GrooscriptConverter grooscriptConverter
 
     @RequestMapping("/hello")
-    String index() {
-        return "Greetings from Spring Boot!"
+    ModelAndView index() {
+        new ModelAndView(
+                "views/hello",
+                [groovyVersion: GroovySystem.version, twitter: 'jfrancoleza'])
     }
 
     @RequestMapping("/conversion")

@@ -31,7 +31,9 @@ class HelloControllerSpec extends Specification {
 
         then:
         response.andExpect(status().isOk())
-                .andExpect(content().string('Greetings from Spring Boot!'))
+                .andExpect(model().attribute('groovyVersion', '2.3.6'))
+                .andExpect(model().attribute('twitter', 'jfrancoleza'))
+                .andExpect(view().name('views/hello'))
     }
 
     def 'hello controller conversion'() {

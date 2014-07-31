@@ -1,8 +1,0 @@
----
-applications:
-- name: groovyFrameworks
-  memory: 512M
-  instances: 1
-  host: groovyFrameworks
-  domain: cfapps.io
-  path: .
