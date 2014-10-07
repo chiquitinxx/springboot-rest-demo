@@ -26,7 +26,6 @@ public class Application extends SpringBootServletInitializer {
 
         println '************************** Running.....'
         println '**** go /conversion to do conversions'
-        println '**** go /game.html for 2048 game'
     }
 
     @Bean
@@ -34,13 +33,3 @@ public class Application extends SpringBootServletInitializer {
         new GrooscriptConverter()
     }
 }
-
-/*class MyInitializer implements ApplicationContextInitializer {
-
-    void initialize(ConfigurableApplicationContext applicationContext) {
-        def reader = new GroovyBeanDefinitionReader(applicationContext)
-        reader.beans {
-            grooscriptConverter(GrooscriptConverter)
-        }
-    }
-}*/

@@ -32,7 +32,7 @@ require(['./common'], function () {
         });
 
         $(document).ready(function() {
-            groovyEditor.setValue('//Traits example\ntrait FlyingAbility {\n  String fly() { "I\'m flying!" }\n}\n\nclass Bird implements FlyingAbility {}\ndef b = new Bird()\nprintln b.fly()\nassert b.fly() == "I\'m flying!"');
+            groovyEditor.setValue('//List\ndef max = [1, 3, 8].collect { it * 2 }.max()\nprintln "Maximum double is: $max"\nassert max == 16\n\n//Traits example\ntrait FlyingAbility {\n  String fly() { "I\'m flying!" }\n}\n\nclass Bird implements FlyingAbility {}\ndef b = new Bird()\nprintln b.fly()\nassert b.fly() == "I\'m flying!"');
         });
     });
 });

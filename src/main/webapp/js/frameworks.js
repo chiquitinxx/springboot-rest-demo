@@ -1,13 +1,15 @@
 require(['./common'], function () {
-    require(['jquery', 'app/Presenter',
-        'sockjs-0.3.4', 'stomp', 'anijs-min'], function($) {
+    require(['jquery', 'app/MyIf', 'app/Presenter', 'app/Framework', 'app/FrameworksModel',
+        'app/FrameworksView', 'sockjs-0.3.4', 'stomp', 'anijs-min'], function($) {
 
         presenter = Presenter();
         presenter.start();
 
         $(document).ready(function() {
+            var gQuery = GQueryImpl();
             connect();
-            Binder().call(presenter);
+            gQuery.bindAllProperties(presenter);
+            gQuery.attachMethodsToDomEvents(presenter);
             presenter.onLoad();
         });
 

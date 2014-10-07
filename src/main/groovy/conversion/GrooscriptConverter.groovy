@@ -3,7 +3,6 @@ package conversion
 import org.grooscript.convert.GsConverter
 import org.grooscript.test.JsTestResult
 import org.grooscript.util.GrooScriptException
-
 import javax.script.Bindings
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
@@ -18,11 +17,12 @@ class GrooscriptConverter {
         ConvertedCode convertedCode = new ConvertedCode(groovyCode: groovyCode)
 
         GsConverter gsConverter = new GsConverter()
-        gsConverter.initialText = 'gs.consoleOutput = false;'
-        gsConverter.finalText = 'var gSfails = gs.fails;var gSconsole = gs.consoleData;'
-        gsConverter.includeJsLib = 'grooscript.min'
+        def options = [:]
+        options.initialText = 'gs.consoleOutput = false;'
+        options.finalText = 'var gSfails = gs.fails;var gSconsole = gs.consoleData;'
+        options.includeJsLib = 'grooscript.min'
         try {
-            String jsCode = gsConverter.toJs(groovyCode)
+            String jsCode = gsConverter.toJs(groovyCode, options)
             JsTestResult result = evalJs(jsCode)
             convertedCode.jsCode = jsCode.substring(
                     jsCode.indexOf('gs.consoleOutput = false;') + 26,
