@@ -3,11 +3,13 @@ package templating
 import groovy.text.Template
 import groovy.text.markup.MarkupTemplateEngine
 import groovy.text.markup.TemplateConfiguration
+import org.junit.Ignore
 import spock.lang.Specification
 
 /**
  * Created by jorge on 31/07/14.
  */
+@Ignore
 class GroovyTemplatesSpec extends Specification {
 
     def 'test hello template'() {

@@ -6,6 +6,6 @@ html {
   body {
     p "Hello, groovy version is $groovyVersion!"
 
-    include template: 'templates/sign.tpl'
+    include template: 'sign.tpl'
   }
 }

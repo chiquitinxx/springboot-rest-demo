@@ -1,16 +1,16 @@
 buildscript {
     ext {
-        springBootVersion = '1.1.7.RELEASE'
-        groovyVersion = '2.3.6'
+        springBootVersion = '1.1.8.RELEASE'
+        groovyVersion = '2.3.7'
     }
     repositories {
         jcenter()
-        //mavenLocal()
+        mavenLocal()
         mavenCentral()
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "org.grooscript:grooscript-gradle-plugin:0.6"
+        classpath "org.grooscript:grooscript-gradle-plugin:0.7-SNAPSHOT"
         classpath 'com.sourcemuse.gradle.plugin:gradle-mongo-plugin:0.4.0'
     }
 }
@@ -29,10 +29,17 @@ war {
 
 grooscript {
     source = ['src/main/groovy/framework/presenter', 'src/main/groovy/framework/model',
-            'src/main/groovy/framework/view',
+            'src/main/groovy/framework/view', 'src/main/resources/nextNumber.groovy',
             'src/main/groovy/conversion/ConvertedCode.groovy']
     classPath = ['src/main/groovy']
     initialText = '//Grooscript converted file'
+}
+
+templates {
+    templatesPath = 'src/main/resources/templates'
+    templates = ['counterBody.tpl']
+    destinationPath = 'src/main/webapp/js/app'
+    //classPath
 }
 
 repositories {
@@ -49,7 +56,7 @@ dependencies {
 
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     compile "org.codehaus.groovy:groovy-templates:${groovyVersion}"
-    compile('org.grooscript:grooscript:0.6') {
+    compile('org.grooscript:grooscript:0.6.1') {
         exclude module: 'groovy'
     }
 

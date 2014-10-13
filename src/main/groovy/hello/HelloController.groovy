@@ -3,7 +3,6 @@ package hello
 import conversion.ConvertedCode
 import conversion.GrooscriptConverter
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
@@ -19,9 +18,16 @@ public class HelloController {
 
     @RequestMapping("/hello")
     ModelAndView index() {
-        new ModelAndView(
-                "views/hello",
-                [groovyVersion: GroovySystem.version, twitter: 'jfrancoleza'])
+        return new ModelAndView(
+            "views/hello",
+            [groovyVersion: GroovySystem.version, twitter: 'jfrancoleza'])
+    }
+
+    @RequestMapping("/counter")
+    ModelAndView counter() {
+        return new ModelAndView(
+            "views/counter",
+            [number: 0])
     }
 
     @RequestMapping("/conversion")

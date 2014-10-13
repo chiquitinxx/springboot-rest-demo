@@ -1,6 +1,6 @@
 package conversion
 
-import org.grooscript.convert.GsConverter
+import org.grooscript.GrooScript
 import org.grooscript.test.JsTestResult
 import org.grooscript.util.GrooScriptException
 import javax.script.Bindings
@@ -16,17 +16,16 @@ class GrooscriptConverter {
     ConvertedCode convertCode(String groovyCode) {
         ConvertedCode convertedCode = new ConvertedCode(groovyCode: groovyCode)
 
-        GsConverter gsConverter = new GsConverter()
-        def options = [:]
-        options.initialText = 'gs.consoleOutput = false;'
-        options.finalText = 'var gSfails = gs.fails;var gSconsole = gs.consoleData;'
-        options.includeJsLib = 'grooscript.min'
         try {
-            String jsCode = gsConverter.toJs(groovyCode, options)
+            GrooScript.clearAllOptions()
+            GrooScript.setConversionProperty('initialText', 'gs.consoleOutput = false;')
+            GrooScript.setConversionProperty('finalText', 'var gSfails = gs.fails;var gSconsole = gs.consoleData;')
+            GrooScript.setConversionProperty('includeJsLib', 'grooscript.min')
+            String jsCode = GrooScript.convert(groovyCode)
             JsTestResult result = evalJs(jsCode)
             convertedCode.jsCode = jsCode.substring(
-                    jsCode.indexOf('gs.consoleOutput = false;') + 26,
-                    jsCode.indexOf('var gSfails = gs.fails;') - 1
+                jsCode.indexOf('gs.consoleOutput = false;') + 26,
+                jsCode.indexOf('var gSfails = gs.fails;') - 1
             )
             convertedCode.console = result.console
             convertedCode.assertFails = result.assertFails
