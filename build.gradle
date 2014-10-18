@@ -43,7 +43,7 @@ templates {
 }
 
 repositories {
-    //mavenLocal()
+    mavenLocal()
     mavenCentral()
 }
 
@@ -56,7 +56,7 @@ dependencies {
 
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     compile "org.codehaus.groovy:groovy-templates:${groovyVersion}"
-    compile('org.grooscript:grooscript:0.6.1') {
+    compile('org.grooscript:grooscript:0.6.2-SNAPSHOT') {
         exclude module: 'groovy'
     }
 

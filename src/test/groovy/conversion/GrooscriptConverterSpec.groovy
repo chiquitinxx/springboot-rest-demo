@@ -58,8 +58,8 @@ class GrooscriptConverterSpec extends Specification {
         then:
         result.errorMessage == ''
         result.groovyCode == GROOVY_ASSERT_CODE
-        result.jsCode == 'gs.assert(gs.equals(1, 2), null);\n'
-        result.console == 'Assert Fails! - false'
+        result.jsCode == 'gs.assert(gs.equals(1, 2), "Assertion fails: (1 == 2)");\n'
+        result.console == 'Assertion fails: (1 == 2) - false'
         result.assertFails == true
     }
 }
