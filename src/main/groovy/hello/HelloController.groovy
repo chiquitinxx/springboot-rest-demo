@@ -23,13 +23,6 @@ public class HelloController {
             [groovyVersion: GroovySystem.version, twitter: 'jfrancoleza'])
     }
 
-    @RequestMapping("/counter")
-    ModelAndView counter() {
-        return new ModelAndView(
-            "views/counter",
-            [number: 0])
-    }
-
     @RequestMapping("/conversion")
     ModelAndView conversion() {
         return new ModelAndView('/conversions.html')

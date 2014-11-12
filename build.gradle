@@ -1,49 +1,41 @@
 buildscript {
     ext {
-        springBootVersion = '1.1.8.RELEASE'
+        springBootVersion = '1.1.9.RELEASE'
         groovyVersion = '2.3.7'
     }
     repositories {
         jcenter()
-        mavenLocal()
         mavenCentral()
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "org.grooscript:grooscript-gradle-plugin:0.7-SNAPSHOT"
         classpath 'com.sourcemuse.gradle.plugin:gradle-mongo-plugin:0.4.0'
     }
+}
+
+plugins {
+  id "org.grooscript.conversion" version "0.7"
 }
 
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-apply plugin: "org.grooscript.conversion"
 apply plugin: 'war'
 apply plugin: 'mongo'
 
 war {
     baseName = 'rest-mongo-grooscript'
-    version =  '0.6.0'
+    version =  '0.7.0'
 }
 
 grooscript {
     source = ['src/main/groovy/framework/presenter', 'src/main/groovy/framework/model',
-            'src/main/groovy/framework/view', 'src/main/resources/nextNumber.groovy',
-            'src/main/groovy/conversion/ConvertedCode.groovy']
+            'src/main/groovy/framework/view', 'src/main/groovy/conversion/ConvertedCode.groovy']
     classPath = ['src/main/groovy']
     initialText = '//Grooscript converted file'
 }
 
-templates {
-    templatesPath = 'src/main/resources/templates'
-    templates = ['counterBody.tpl']
-    destinationPath = 'src/main/webapp/js/app'
-    //classPath
-}
-
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
@@ -51,12 +43,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-websocket")
     compile("org.springframework:spring-messaging")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
-    //compile "org.springframework.data:spring-data-commons:1.6.2.RELEASE"
-    //compile "org.springframework.data:spring-data-mongodb:1.4.0.RELEASE"
 
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     compile "org.codehaus.groovy:groovy-templates:${groovyVersion}"
-    compile('org.grooscript:grooscript:0.6.2-SNAPSHOT') {
+    compile('org.grooscript:grooscript:0.6.2') {
         exclude module: 'groovy'
     }
 
@@ -67,13 +57,11 @@ dependencies {
         exclude module: 'groovy-all'
     }
     testCompile("org.springframework.boot:spring-boot-starter-test")
-    //testCompile 'org.springframework:spring-test:4.0.4.RELEASE'
-    //testCompile 'org.objenesis:objenesis:1.2'
     testCompile 'cglib:cglib-nodep:2.2.2'
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.1'
+    gradleVersion = '2.2'
 }
 
 bootRun.dependsOn startManagedMongoDb
