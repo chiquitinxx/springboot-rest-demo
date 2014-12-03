@@ -8,6 +8,7 @@ class Framework {
     String name
     String url
     String urlImage
+    String description
 
     boolean hasImage() {
         urlImage && ['.GIF', '.PNG', '.JPG'].any { urlImage.toUpperCase().endsWith(it)}

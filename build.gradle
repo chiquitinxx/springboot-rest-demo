@@ -1,27 +1,30 @@
 buildscript {
     ext {
         springBootVersion = '1.1.9.RELEASE'
-        groovyVersion = '2.3.7'
+        groovyVersion = '2.3.8'
     }
     repositories {
+        mavenLocal()
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath 'com.sourcemuse.gradle.plugin:gradle-mongo-plugin:0.4.0'
+        classpath 'org.grooscript:grooscript-gradle-plugin:0.8-SNAPSHOT'
     }
 }
 
-plugins {
-  id "org.grooscript.conversion" version "0.7"
-}
+//plugins {
+//  id "org.grooscript.conversion" version "0.8-SNAPSHOT"
+//}
 
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'war'
 apply plugin: 'mongo'
+apply plugin: "org.grooscript.conversion"
 
 war {
     baseName = 'rest-mongo-grooscript'
@@ -46,7 +49,7 @@ dependencies {
 
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     compile "org.codehaus.groovy:groovy-templates:${groovyVersion}"
-    compile('org.grooscript:grooscript:0.6.2') {
+    compile('org.grooscript:grooscript:0.6.3') {
         exclude module: 'groovy'
     }
 

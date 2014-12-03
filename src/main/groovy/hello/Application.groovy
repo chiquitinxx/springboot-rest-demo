@@ -19,9 +19,6 @@ public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(Application.class)
-        //app.addInitializers(new MyInitializer())
-        //app.setShowBanner(false)
-        //ConfigurableApplicationContext ctx =
         app.run(args)
 
         println '************************** Running.....'

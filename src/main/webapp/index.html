@@ -7,15 +7,10 @@
     <script data-main="js/frameworks" src="js/lib/require.js"></script>
 </head>
 <body>
-    <div id="newFramework">
-        <p>Name:<input type="text" id="nameFramework"/>*</p>
-        <p>Url framework:<input type="text" id="urlFramework"/>*</p>
-        <p>Url image framework:<input type="text" id="urlImageFramework"/></p>
-        <input type="button" class="doButton" id="buttonAddFramework" value="Add framework"
-                data-anijs="if: mousedown, do: shake animated, to: #validationError"/>
-        <div id="validationError"></div>
-        <div id="mainTitle" data-anijs="if: mouseenter, do: tada animated">Groovy Frameworks</div>
-    </div>
+    <header>
+        <div id="mainTitle" data-anijs="if: mouseenter, do: tada animated">Groovy Ecosystem</div>
+    </header>
+
     <div id="listFrameworks">
         <h3>Loading images...</h3>
     </div>

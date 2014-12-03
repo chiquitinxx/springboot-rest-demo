@@ -19,7 +19,7 @@ class FrameworksView {
         def html = HtmlBuilder.build {
             ul {
                 frameworks.each { Framework framework ->
-                    li {
+                    li(alt: framework.description) {
                         div(class: 'logo', 'data-anijs': 'if: mouseenter, do: flip animated') {
                             if (!framework.hasImage() && framework.isGithub()) {
                                 img src: 'img/github.png'
@@ -27,16 +27,14 @@ class FrameworksView {
                                 img src: framework.hasImage() ? framework.urlImage : 'img/nologo.png'
                             }
                         }
-                        a (href: framework.url, framework.name)
+                        p {
+                            a (href: framework.url, framework.name)
+                        }
                     }
                 }
             }
         }
 
         putHtml('#listFrameworks', html)
-    }
-
-    def validationError(List messages) {
-        putHtml('#validationError', messages.join(' - '))
     }
 }
