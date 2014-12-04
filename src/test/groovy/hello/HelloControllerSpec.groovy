@@ -31,7 +31,7 @@ class HelloControllerSpec extends Specification {
 
         then:
         response.andExpect(status().isOk())
-                .andExpect(model().attribute('groovyVersion', '2.3.7'))
+                .andExpect(model().attribute('groovyVersion', '2.3.8'))
                 .andExpect(model().attribute('twitter', 'jfrancoleza'))
                 .andExpect(view().name('views/hello'))
     }

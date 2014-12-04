@@ -27,7 +27,6 @@ class FrameworksControllerSpec extends Specification {
 
     void setup() {
         frameworksController = new FrameworksController()
-        frameworksController.simpMessagingTemplate = messagingTemplate
         frameworksController.repository = repository
         mockMvc = standaloneSetup(frameworksController).build()
     }
@@ -38,26 +37,9 @@ class FrameworksControllerSpec extends Specification {
 
         then:
         1 * repository.findAll() >> [[NAME: 'Grails', URL: 'grails.org', URL_IMAGE: 'image']]
+        1 * repository.count() >> frameworksController.initialFrameworks.size()
         response.andExpect(status().isOk())
                 .andExpect(content().string('[{"NAME":"Grails","URL":"grails.org","URL_IMAGE":"image"}]'))
-        0 * _
-    }
-
-    def 'post a new framework'() {
-        given:
-        def newFramework = new Framework(name: 'Spock', url: 'spock.org', urlImage: 'image')
-
-        when:
-        def response = mockMvc.perform(post('/frameworks').
-                param('name', newFramework.name).
-                param('url', newFramework.url).
-                param('urlImage', newFramework.urlImage))
-
-        then:
-        1 * repository.save(newFramework)
-        response.andExpect(status().isOk())
-                .andExpect(content().string('{"id":null,"name":"Spock","url":"spock.org","urlImage":"image","github":false}'))
-        1 * messagingTemplate.convertAndSend('/topic/newFramework', newFramework)
         0 * _
     }
 }

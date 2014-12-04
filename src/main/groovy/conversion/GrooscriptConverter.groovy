@@ -13,12 +13,11 @@ class GrooscriptConverter {
         ConvertedCode convertedCode = new ConvertedCode(groovyCode: groovyCode)
 
         try {
-            JsTestResult result = GrooScript.evaluateGroovyCode(groovyCode)
+            JsTestResult result = GrooScript.evaluateGroovyCode(groovyCode.trim())
             convertedCode.jsCode = result.jsCode
             convertedCode.console = result.console
             convertedCode.assertFails = result.assertFails
         } catch (e) {
-            println '**** Error conversion: ' + e.message
             convertedCode.errorMessage = e.message
         }
 

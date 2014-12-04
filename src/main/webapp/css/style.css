@@ -7,14 +7,13 @@ body {
 
 input {
     margin-left: 1em;
-    width: 300px;
     font-family: Lato;
     font-size: 22px;
 }
 
 .doButton {
     margin-left: 0;
-    padding:5px 15px;
+    padding:5px 25px;
     border:1 none;
     cursor:pointer;
     -webkit-border-radius: 5px;

@@ -40,6 +40,6 @@ class FrameworksViewSpec extends Specification {
         view.updateFrameworks([new Framework(name: NAME, url: URL, urlImage: URL_IMAGE)])
 
         then:
-        htmlResult == '<ul><li><div class=\'logo\' data-anijs=\'if: mouseenter, do: flip animated\'><img src=\'aUrlImage.jpg\'></img></div><a href=\'aUrl\'>aName</a></li></ul>'
+        htmlResult == '<ul><li alt=\'null\'><div class=\'logo\' data-anijs=\'if: mouseenter, do: flip animated\'><img src=\'aUrlImage.jpg\'></img></div><p><a href=\'aUrl\'>aName</a></p></li></ul>'
     }
 }
