@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository
 /**
  * Created by jorge on 03/05/14.
  */
-@Repository
 interface FrameworkRepository extends MongoRepository<Framework, BigInteger> {
 }

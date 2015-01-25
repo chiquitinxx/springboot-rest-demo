@@ -7,6 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.context.web.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
+import robot.RobotService
 
 @EnableAutoConfiguration
 @ComponentScan
@@ -28,5 +29,10 @@ public class Application extends SpringBootServletInitializer {
     @Bean
     GrooscriptConverter grooscriptConverter() {
         new GrooscriptConverter()
+    }
+
+    @Bean
+    RobotService robotService() {
+        new RobotService()
     }
 }
