@@ -14,7 +14,7 @@ buildscript {
 }
 
 plugins {
-  id "org.grooscript.conversion" version "0.12"
+  id "org.grooscript.conversion" version "1.0.0"
 }
 
 apply plugin: 'groovy'
@@ -25,7 +25,7 @@ apply plugin: 'mongo'
 
 war {
     baseName = 'rest-mongo-grooscript'
-    version =  '0.10.0'
+    version =  '1.0.0'
 }
 
 grooscript {
@@ -48,7 +48,7 @@ dependencies {
 
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     compile "org.codehaus.groovy:groovy-templates:${groovyVersion}"
-    compile('org.grooscript:grooscript:1.0.0-rc-2') {
+    compile('org.grooscript:grooscript:1.0.0') {
         exclude module: 'groovy'
     }
 
