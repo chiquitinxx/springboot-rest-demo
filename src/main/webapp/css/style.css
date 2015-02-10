@@ -14,7 +14,7 @@ input {
 .doButton {
     margin-left: 0;
     padding:5px 25px;
-    border:1 none;
+    border:1px none;
     cursor:pointer;
     -webkit-border-radius: 5px;
     border-radius: 5px;

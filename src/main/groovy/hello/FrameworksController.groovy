@@ -109,6 +109,7 @@ public class FrameworksController {
                     name: 'Geb',
                     description: 'Functional testing',
                     url: 'http://www.gebish.org',
+                    urlImage: 'img/geb.png'
             ],
             [
                     name: 'Lazybones',
@@ -178,6 +179,18 @@ public class FrameworksController {
                     name: 'Crash',
                     description: 'Embeddable shell for JVM',
                     url: 'http://www.crashub.org',
+                    urlImage: 'img/crash.png'
+            ],
+            [
+                    name: 'Apache Camel',
+                    description: 'Define routing and mediation rules',
+                    url: 'http://camel.apache.org',
+            ],
+            [
+                    name: 'Vert.x',
+                    description: 'High performance application platform for the JVM',
+                    url: 'http://vertx.io',
+                    urlImage: 'img/vertx.png'
             ],
     ]
 }
