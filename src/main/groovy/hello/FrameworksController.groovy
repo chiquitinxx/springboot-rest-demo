@@ -23,7 +23,7 @@ public class FrameworksController {
     }
 
     private initializeListIfEmpty() {
-        if (repository.count() < initialFrameworks.size()) {
+        if (frameworksChanged()) {
             repository.deleteAll()
             initialFrameworks.each { props ->
                 def framework = new Framework()
@@ -34,6 +34,11 @@ public class FrameworksController {
             }
         }
     }
+
+    private frameworksChanged() {
+        repository.count() < initialFrameworks.size()
+    }
+
     private initialFrameworks = [
             [
                     name: 'GVM',
@@ -63,6 +68,7 @@ public class FrameworksController {
                     name: 'Spock',
                     description: 'Testing framework',
                     url: 'http://spockframework.org',
+                    urlImage: 'img/spock.png'
             ],
             [
                     name: 'Groovy-Stream',
@@ -191,6 +197,12 @@ public class FrameworksController {
                     description: 'High performance application platform for the JVM',
                     url: 'http://vertx.io',
                     urlImage: 'img/vertx.png'
+            ],
+            [
+                    name: 'Elastic Search',
+                    description: 'Distributed RESTful search and analytics',
+                    url: 'http://www.elasticsearch.org/',
+                    urlImage: 'img/elastic.png'
             ],
     ]
 }

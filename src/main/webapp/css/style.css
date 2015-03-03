@@ -81,3 +81,7 @@ header {
     background-color: black;
     color: white;
 }
+
+#listFrameworks {
+    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+}
