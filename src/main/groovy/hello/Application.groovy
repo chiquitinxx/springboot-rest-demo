@@ -22,7 +22,7 @@ public class Application extends SpringBootServletInitializer {
         SpringApplication app = new SpringApplication(Application.class)
         app.run(args)
 
-        println '************************** Running.....'
+        println '**** Running..... ' + args.toList()
         println '**** go /conversion to do conversions'
     }
 

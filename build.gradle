@@ -1,4 +1,5 @@
 buildscript {
+
     ext {
         springBootVersion = '1.2.3.RELEASE'
         groovyVersion = '2.4.3'
@@ -10,6 +11,7 @@ buildscript {
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath 'com.sourcemuse.gradle.plugin:gradle-mongo-plugin:0.4.0'
+        classpath("io.spring.gradle:dependency-management-plugin:0.5.0.RELEASE")
     }
 }
 
@@ -20,11 +22,15 @@ plugins {
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-apply plugin: 'war'
 apply plugin: 'mongo'
+apply plugin: 'io.spring.dependency-management'
 
-war {
-    baseName = 'rest-mongo-grooscript'
+def compatibilityVersion = 1.7
+sourceCompatibility = compatibilityVersion
+targetCompatibility = compatibilityVersion
+
+jar {
+    baseName = 'rest'
     version =  '1.0.2'
 }
 
@@ -33,6 +39,7 @@ grooscript {
             'src/main/groovy/framework/view', 'src/main/groovy/conversion/ConvertedCode.groovy',
             'src/main/groovy/conversion/ConversionPresenter.groovy'
     ]
+    destination = 'src/main/resources/static/js/app'
     classPath = ['src/main/groovy']
     initialText = '//Grooscript converted file'
 }
@@ -42,8 +49,7 @@ repositories {
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-websocket")
-    compile("org.springframework:spring-messaging")
+    compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
 
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
@@ -51,8 +57,6 @@ dependencies {
     compile('org.grooscript:grooscript:1.0.2') {
         exclude module: 'groovy'
     }
-
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
     testCompile 'org.jsoup:jsoup:1.7.3'
     testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {

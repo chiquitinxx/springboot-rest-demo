@@ -25,17 +25,6 @@ class HelloControllerSpec extends Specification {
                 new HelloController(grooscriptConverter: grooscriptConverter)).build()
     }
 
-    def 'hello controller index'() {
-        when:
-        def response = mockMvc.perform(get('/hello'))
-
-        then:
-        response.andExpect(status().isOk())
-                .andExpect(model().attribute('groovyVersion', '2.4.0'))
-                .andExpect(model().attribute('twitter', 'jfrancoleza'))
-                .andExpect(view().name('views/hello'))
-    }
-
     def 'hello controller conversion'() {
         when:
         def response = mockMvc.perform(get('/conversion'))

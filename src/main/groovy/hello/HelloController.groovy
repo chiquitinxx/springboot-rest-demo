@@ -20,14 +20,7 @@ public class HelloController {
     @Autowired
     RobotService robotService
 
-    @RequestMapping("/hello")
-    ModelAndView index() {
-        return new ModelAndView(
-            "views/hello",
-            [groovyVersion: GroovySystem.version, twitter: 'jfrancoleza'])
-    }
-
-    @RequestMapping("/conversion")
+    @RequestMapping(value="/conversion", method=RequestMethod.GET)
     ModelAndView conversion() {
         return new ModelAndView('/conversions.html')
     }

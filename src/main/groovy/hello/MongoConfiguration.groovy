@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration
 @Configuration
 class MongoConfiguration extends AbstractMongoConfiguration {
     String getDatabaseName() {
-        "frameworks"
+        "ecosystem"
     }
 
     Mongo mongo() throws Exception {
