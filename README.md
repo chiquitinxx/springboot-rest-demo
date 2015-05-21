@@ -20,4 +20,4 @@ Convert logic groovy files to javascript:
 
 Demo running in http://localhost:8080/
 
-Can see application deployed on [Openshift](http://frameworks-groovygs.rhcloud.com/)
+Can see application deployed on [Openshift](http://ecosystem-gr8.rhcloud.com/)
