@@ -3,10 +3,6 @@ function FrameworksView() {
   var gSobject = gs.inherit(gs.baseClass,'FrameworksView');
   gSobject.clazz = { name: 'framework.view.FrameworksView', simpleName: 'FrameworksView'};
   gSobject.clazz.superclass = { name: 'java.lang.Object', simpleName: 'Object'};
-  gSobject.putHtml = function(selector, html) {
-    $(selector).html(html);
-        AniJS.run();
-  }
   gSobject['updateFrameworks'] = function(frameworks) {
     var html = gs.execStatic(HtmlBuilder,'build', this,[function(it) {
       return gs.mc(this,"ul",[function(it) {
@@ -27,6 +23,10 @@ function FrameworksView() {
       }], gSobject);
     }]);
     return gs.mc(gSobject,"putHtml",["#listFrameworks", html]);
+  }
+  gSobject.putHtml = function(selector, html) {
+    $(selector).html(html);
+        AniJS.run();
   }
   if (arguments.length == 1) {gs.passMapToObject(arguments[0],gSobject);};
   

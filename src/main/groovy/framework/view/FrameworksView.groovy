@@ -9,13 +9,7 @@ import org.grooscript.builder.HtmlBuilder
  */
 class FrameworksView {
 
-    @GsNative
-    void putHtml(String selector, String html) {/*
-        $(selector).html(html);
-        AniJS.run();
-    */}
-
-    def updateFrameworks(List frameworks) {
+    def updateFrameworks(List<Framework> frameworks) {
         def html = HtmlBuilder.build {
             ul {
                 frameworks.each { Framework framework ->
@@ -37,4 +31,10 @@ class FrameworksView {
 
         putHtml('#listFrameworks', html)
     }
+
+    @GsNative
+    private void putHtml(String selector, String html) {/*
+        $(selector).html(html);
+        AniJS.run();
+    */}
 }
