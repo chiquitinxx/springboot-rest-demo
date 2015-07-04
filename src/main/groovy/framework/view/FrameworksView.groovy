@@ -13,16 +13,16 @@ class FrameworksView {
         def html = HtmlBuilder.build {
             ul {
                 frameworks.each { Framework framework ->
-                    li(alt: framework.description) {
-                        div(class: 'logo', 'data-anijs': 'if: mouseenter, do: flip animated') {
-                            if (!framework.hasImage() && framework.isGithub()) {
-                                img src: 'img/github.png'
-                            } else {
-                                img src: framework.hasImage() ? framework.urlImage : 'img/nologo.png'
+                    a (href: framework.url) {
+                        li(alt: framework.description) {
+                            div(class: 'logo', 'data-anijs': 'if: mouseenter, do: flip animated') {
+                                if (!framework.hasImage() && framework.isGithub()) {
+                                    img src: 'img/github.png'
+                                } else {
+                                    img src: framework.hasImage() ? framework.urlImage : 'img/nologo.png'
+                                }
                             }
-                        }
-                        p {
-                            a (href: framework.url, framework.name)
+                            p framework.name
                         }
                     }
                 }
