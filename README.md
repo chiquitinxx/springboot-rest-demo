@@ -10,14 +10,14 @@ Create idea project:
 
     ./gradlew idea
 
-Run project, need Mongo Db 2.4+ installed and running:
+Run project in local (create MongoDb instance and convert groovy files to javascript in background):
 
     ./gradlew bootRun
 
-Convert logic groovy files to javascript:
+Convert groovy files to javascript:
 
     ./gradlew convert
 
-Demo running in http://localhost:8080/
+Demo running in local http://localhost:8080/
 
 Can see application deployed on [Openshift](http://ecosystem-gr8.rhcloud.com/)
