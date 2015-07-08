@@ -1,7 +1,7 @@
 package hello
 
 import com.mongodb.Mongo
-import com.mongodb.MongoOptions
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.authentication.UserCredentials
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration
@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration
  * Created by jorge on 03/05/14.
  */
 @Configuration
+@ConditionalOnExpression(value = '#{\'${spring.data.mongodb.host}\'==null}')
 class MongoConfiguration extends AbstractMongoConfiguration {
     String getDatabaseName() {
         "ecosystem"
